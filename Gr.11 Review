@@ -1,0 +1,18 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+  //cout << "Hello World!";
+  
+  /*string name;
+  cout << "Enter your name: ";
+  cin >> name;
+  cout << "Hi " << name << endl;*/
+
+  /*string fullname;
+  cout << "Enter your name: ";
+  getline(cin, fullname);
+  cout << "Hi, " << fullname << endl;*/
+
+  
+}
