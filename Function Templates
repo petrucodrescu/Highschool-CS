@@ -1,0 +1,48 @@
+#include <iostream>
+using namespace std;
+
+template<typename T>
+T Twomax(T a, T b);
+
+enum Day{Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday};
+
+int main() {
+/*   string name1 = "John";
+  string name2 = "Abby";
+  cout << "Bigger items" << endl;
+  cout << max(10, 15) << endl;
+  cout << max(1.2, 2.3) << endl;
+  cout << max(name1, name2) << endl; */
+
+  Day today = Friday;
+  Day tomorrow = Saturday;
+  Day yesterday = Thursday;
+
+  int day = 0;
+  switch(day)
+    {
+      case Sunday:
+      cout << "Sunday" << endl;
+      case Monday:
+      cout << "Monday" << endl;
+      case Tuesday:
+      cout << "Tuesday" << endl;
+      case Wednesday:
+      cout << "Wednesday" << endl;
+      case Thursday:
+      cout << "Thursday" << endl;
+      case Friday:
+      cout << "Friday" << endl;
+      case Saturday:
+      cout << "Saturday" << endl;
+    }
+}
+
+template<typename T>
+T Twomax(T a, T b)
+{
+  if(a > b)
+    return a;
+  else
+    return b;
+}
