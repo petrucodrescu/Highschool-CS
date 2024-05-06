@@ -1,0 +1,504 @@
+/* Author: Petru Codrescu
+   Class: ICS4U1-01
+   Assign 01
+*********************************/
+
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+//..this function prints out the main menu
+void menu(int &option)
+{
+  //..Displaying the menu
+  cout << "Welcome to the Shape Generator: " << endl;
+  cout << endl << endl;
+  cout << "This program outputs the following shapes: " << endl;
+  cout << "1) Horizontal Line \n2) Vertical Line \n3) Rectangle \n4) Left Slant Right Angle Triangle \n5) Right Slant \n6) Isosceles Triangle \n7) drawBox \n8) drawGlass" << endl;
+
+  //..asking for input
+  cout << "Enter your choice (1-8): ";
+  cin >> option;
+}
+
+//..this function prints a horizontal line
+void horizontal_line(int length)
+{
+  //..intializing loop variable
+  int i = 0;
+
+  //..start of loop
+  while(i < length)
+    {
+      //..displaying line
+      cout << "*";
+
+      i++;
+    }//..end of loop
+  
+    cout << endl;
+}
+
+//..this function prints a vertical line
+void vertical_line(int length)
+{
+  //..intializing variable
+  int i = 0;
+
+  //..start of loop
+  while(i < length)
+    {
+      //..outputing and incrementing
+      cout << "*" << endl;
+
+      i++;
+    }//..end of loop
+}
+
+//..this function prints out a rectangle
+void rectangle(int width, int height)
+{
+  //..start of loop
+  for(int i = 0; i < height; i++)
+    {
+      //..start of 2nd loop
+      for(int j = 0; j < width; j++)
+        //outputing asterix
+        cout << "*";
+      //..end of 2nd loop
+
+      //..making a new line
+      cout << endl;
+    }//..end of loop
+}
+
+//..this function prints a left slanted triangle
+void left_slanted_triangle(int height)
+{
+  //..start of loop
+  for(int i = 1; i <= height; i++)
+    {
+      //..start of 2nd loop
+      for(int j = 0; j < i; j++)
+        //..outputing asterix
+        cout << "*";
+      //..end of 2nd loop
+
+      //..making a new line
+      cout << endl;
+    }//..end of loop
+}
+
+//..this function prints a right slanted triangle
+void right_slanted_triangle(int height)
+{
+  //..start of loop
+  for(int i = 1; i <= height; i++)
+    {
+      //..start of 2nd loop
+      for(int j = 0; j < (height - i); j++)
+        //..outputing spaces in between that come before asterix
+          cout << " ";
+      //..end of 2nd loop
+
+      //..start of  loo3rdp
+      for(int j = 0; j < i; j++)
+        //..outputting the asterix
+        cout << "*";
+      //..end of 3rd loop
+
+      //..starting new line
+      cout << endl;
+    }
+}
+
+//..this function prints an isosceles triangle
+void isosceles_triangle(int height)
+{
+  //..start of loop
+  for(int i = 1; i <= height; i++)
+    {
+      //..outputing spaces, right to left
+      for(int j = 0; j < (height - i); j++)
+        cout << " ";
+
+      //..outputting the asterix
+      for(int j = 0; j < i; j++)
+        cout << "*";
+
+      for(int j = 1; j < i; j++)
+        cout << "*";
+
+      //..starting new line
+      cout << endl;
+      
+    }//..end of loop
+  
+}
+
+//..this function prints a box shape
+void box(int length)
+{
+  //..calling function to create top of box
+  horizontal_line(length * 2);
+
+  //..start of first loop
+  for(int i = 0; i < length - 2; i++)
+    {
+      //..outputing asterix
+      cout << "*";
+
+      //..start of 2nd loop
+      for(int j = 0; j < length * 2 - 2; j++)
+        {
+          //..outputing spaces
+          cout << " ";
+          
+        }//..end of 2nd loop
+
+      //..outputing assterix
+      cout << "*" << endl;
+      
+    }//..end of first loop
+
+  //..calling function to make bottom of box
+  horizontal_line(length * 2);
+}
+
+//..this function prints a glass shape
+void glass(int length)
+{
+  //..start of first loop
+  for(int i = 1; i <= length / 2; i++)
+    {
+      //..start of 2nd loop
+      for(int k = 0; k < i; k++)
+        //..outputing asterix
+        cout << "*"; 
+      //..end of 2nd loop
+
+      //..start of 3rd loop
+      for(int j = 0; j < length - 2 * i; j++)
+        {
+          //..outputing spaces
+          cout << " ";
+        }//..end of 3rd loop
+
+      //..start of 4th loop
+      for(int k = 0; k < i; k++)
+        //..outputting asterix
+        cout << "*";
+      //..end of 4th loop
+
+      //..print a new line
+      cout << endl;
+    }
+}
+
+int main() {
+  //..intializing option value
+  int option = 0;
+
+  //..intializing run condition for main loop
+  char yesno;
+
+  //..intializing count for all functions
+  int function1count = 0;
+  int function2count = 0;
+  int function3count = 0;
+  int function4count = 0;
+  int function5count = 0;
+  int function6count = 0;
+  int function7count = 0;
+  int function8count = 0;
+  
+  //..start of while loop
+  while(yesno != 'n')
+    {
+      //..calling the function
+      menu(option);
+
+      //..checking for invalid inputs
+      if(option < 1)
+      {
+        cout << "Invalid choice! Your choice must be between 1 and 8." << endl;
+        cout << "Enter your choice: ";
+        cin >> option;
+      }
+      
+      if(option > 8)
+      {
+        cout << "Invalid choice! Your choice must be between 1 and 8." << endl;
+        cout << "Enter your choice: ";
+        cin >> option;
+      }
+
+      //..main body to call functions
+      switch(option){
+        //..option 1
+        case 1:
+          {
+            //..intializing variable
+            int length;
+
+            //..asking for user input
+            cout << "Please input length: ";
+            cin >> length;
+
+            //..checking if invalid
+            while(length > 20 || length < 1) //..start of loop
+              {
+                cout << "Invalid input, please try again: ";
+                cin >> length;
+              }//..end of loop
+
+            //..calling function
+            horizontal_line(length);
+
+            //..adding to final count
+            function1count++;
+
+            //..asking for user input
+            cout << "Would you like to draw another? (y/n): ";
+            cin >> yesno;
+            
+            break;
+          }
+
+        //..option 2
+        case 2:
+          {
+            //..intializing variable
+            int length;
+
+            //..asking for user input
+            cout << "Please input height: ";
+            cin >> length;
+
+            //..checking if invalid
+            while(length > 20 || length < 1) //..start of loop
+              {
+                cout << "Invalid input, please try again: ";
+                cin >> length;
+              } //..end of loop
+
+            //..calling function
+            vertical_line(length);
+
+            //..adding to final count
+            function2count++;
+
+            //..asking for user input
+            cout << "Would you like to draw another? (y/n): ";
+            cin >> yesno;
+            
+            break;
+          }
+
+        //..option 3
+        case 3:
+          {
+            //..intializing variables
+            int width, height;
+
+            //..asking for user input
+            cout << "Please enter width: ";
+            cin >> width;
+
+            //..checking if invalid
+            while(width > 20 || width < 1)//..start of loop
+              {
+                cout << "Invalid input, please try again: ";
+                cin >> width;
+              }//..end of loop
+
+            //..asking for user input
+            cout << "Please enter height: ";
+            cin >> height;
+
+            //..checking if invalid
+            while(height > 20 || height < 1) //..start of loop
+              {
+                cout << "Invalid input, please try again: ";
+                cin >> height;
+              }//..end of loop
+
+            //..calling function
+            rectangle(width, height);
+
+            //..adding to final count
+            function3count++;
+
+            //..asking for user input
+            cout << "Would you like to draw another? (y/n): ";
+            cin >> yesno;
+            
+            break;
+          }
+
+        //..option 4
+        case 4:
+          {
+            //..intializing variable
+            int height;
+
+            //..asking for user input
+            cout << "Please enter height: ";
+            cin >> height;
+
+            //..checking if invalid
+            while(height > 20 || height < 1)//..start of loop
+              {
+                cout << "Invalid input, please try again: ";
+                cin >> height;
+              } //..end of loop
+
+            //..calling function
+            left_slanted_triangle(height);
+
+            //..adding to final count
+            function4count++;
+
+            //..asking for user input
+            cout << "Would you like to draw another? (y/n): ";
+            cin >> yesno;
+            
+            break;
+          }
+
+        //..option 5
+        case 5:
+          {
+            //..intializing variable
+            int height;
+
+            //..asking for user input
+            cout << "Please enter height: ";
+            cin >> height;
+
+            //..checking if invalid
+            while(height > 20 || height < 1)//..start of loop
+              {
+                cout << "Invalid input, please try again: ";
+                cin >> height;
+              } //..end of loop
+
+            //..calling function
+            right_slanted_triangle(height);
+
+            //..adding to final word count
+            function5count++;
+
+            //..asking for user input
+            cout << "Would you like to draw another? (y/n): ";
+            cin >> yesno;
+            
+            break;
+          }
+
+        //..option 6
+        case 6:
+          {
+            //..intializing variable
+            int height;
+
+            //..asking for user input
+            cout << "Please input height: ";
+            cin >> height;
+
+            //..checking if valid
+            while(height > 20 || height < 1)//,.start of loop
+              {
+                cout << "Invalid input, please try again: ";
+                cin >> height;
+              }//..end of loop
+
+            //..calling function
+            isosceles_triangle(height);
+
+            //..adding to final count
+            function6count++;
+
+            //..asking for user input
+            cout << "Would you like to draw another? (y/n): ";
+            cin >> yesno;
+            
+            break;
+          }
+
+        //..option 7
+        case 7:
+          {
+            //..intializing variable
+            int length;
+
+            //..asking for user input
+            cout << "Please input length: ";
+            cin >> length;
+
+            //..checking if valid
+            while(length > 20 || length < 1)//..start of loop
+              {
+                cout << "Invalid input, please try again: ";
+                cin >> length;
+              }//..end of loop
+
+            //..calling function
+            box(length);
+
+            //..adding to final count
+            function7count++;
+
+            //..asking for user input
+            cout << "Would you like to draw another? (y/n): ";
+            cin >> yesno;
+            
+            break;
+          }
+
+        //..option 8
+        case 8:
+          {
+            //..intializing variable
+            int length;
+
+            //..asking for user input
+            cout << "Please input length: ";
+            cin >> length;
+
+            //..checking if valid
+            while(length > 20 || length < 1)//..start of loop
+              {
+                cout << "Invalid input, please try again: ";
+                cin >> length;
+              }//..end of loop
+
+            //..calling function
+            glass(length);
+
+            //..adding for final count
+            function8count++;
+
+            //..asking for user input
+            cout << "Would you like to draw another? (y/n): ";
+            cin >> yesno;
+
+            break;
+          }
+      }
+    }//..end of while loop
+
+  //..outputing final count of options picked
+  cout << "Here is a summary of all the shapes drawn: " << endl << endl;
+
+  cout << "Horizontal Lines: " << function1count << endl;
+  cout << "vertical Lines: " << function2count << endl;
+  cout << "Rectangle: " << function3count << endl;
+  cout << "Left Slant Triangle: " << function4count << endl;
+  cout << "Right Slant Triangle: " << function5count << endl;
+  cout << "Isosceles Triangle: " << function6count << endl;
+  cout << "Box: " << function7count << endl;
+  cout << "Glass: " << function8count << endl;
+
+  cout << "Thank you for using the shapes generator!" << endl;
+}
