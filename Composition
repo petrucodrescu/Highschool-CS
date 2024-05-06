@@ -1,0 +1,48 @@
+#include <iostream>
+#include "point.h"
+#include "circle.h"
+using namespace std;
+
+int main() {
+}
+
+#ifndef CIRCLE_H
+#define CIRCLE_H
+#include "point.h"
+
+class Circle{
+private:
+Point center;
+double radius;
+
+public:
+Circle(): center()
+};
+
+#endif
+
+#include <iostream>
+using namespace std;
+#ifndef POINT_H
+#define POINT_H
+
+class Point{
+private: 
+int x, y, z;
+
+public:
+Point():x(0), y(0){}
+Point(int x, int y): x(x), y(y){}
+
+friend ostream& operator<<(ostream& os, Point &p)
+{
+  os << "(" << p.x << " ," << p.y << endl;
+  return os;
+}
+
+
+
+
+};
+
+#endif
