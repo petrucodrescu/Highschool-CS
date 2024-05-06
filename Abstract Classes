@@ -1,0 +1,114 @@
+#include <iostream>
+using namespace std;
+
+class Fruit{
+public:
+string name;
+Fruit() {name = "Unknown";}    
+
+Fruit(string name): name(name){}
+
+virtual void eat() = 0;
+
+virtual ~Fruit(){}
+};
+
+class Apple: public Fruit{
+public:
+
+void eat()
+{
+  cout << "I eat Alfonso's apples" << endl;
+}
+};
+
+class Mango: public Fruit{
+public:
+
+void eat()
+{
+  cout << "I eat Alfonso's mangoes" << endl;
+}
+};
+
+class Avocado: public Fruit{
+public:
+
+void eat()
+{
+  cout << "I eat Alfonso's avocados" << endl;
+}
+};
+
+class Ins{
+public:
+string name;
+Ins() {name = "Unknown";}
+
+Ins(string name): name(name){}
+
+virtual void play() = 0;
+
+virtual ~Ins(){}
+};
+
+class Guitar: public Ins{
+public:
+
+void play()
+{
+  cout << "Playing the guitar..." << endl;
+}
+};
+
+class Xylophone: public Ins{
+public:
+
+void play()
+{
+  cout << "Playing the xylophone..." << endl;
+}
+};
+
+class Piano: public Ins{
+public:
+
+void play()
+{
+  cout << "Playing the piano..." << endl;
+}
+};
+
+class Drum: public Ins{
+public:
+
+void play()
+{
+  cout << "Playing the drum..." << endl;
+}
+};
+
+int main() {
+  Fruit *f[] = {new Apple, new Mango, new Avocado};
+
+  for(int i = 0; i < 3; i++)
+    {
+      f[i]->eat();
+    }
+
+  for(int i = 0; i < 3; i++)
+    {
+      delete f[i];
+    }
+
+  Ins *I[] = {new Piano, new Drum, new Guitar, new Xylophone};
+  for(int i = 0; i < 3; i++)
+    {
+      I[i]->play();
+    }
+
+  for(int i = 0; i < 3; i++)
+    {
+      delete I[i];
+    }
+}
