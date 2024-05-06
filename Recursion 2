@@ -1,0 +1,42 @@
+#include <iostream>
+using namespace std;
+
+int power(int n)
+{
+  if(n == 0)
+    return 1;
+  else
+  {
+    return 2 * power(n-1);
+  }
+}
+
+int complexpower(int x, int n)
+{
+  if(n == 0)
+    return 1;
+  else
+  {
+    return x * complexpower(x, n-1);
+  }
+}
+
+int addingnumbers(int n)
+{
+  if(n == 1)
+    return 1;
+  else
+  {
+    return n + addingnumbers(n-1);
+  }
+}
+
+int main() {
+  int n = 6;
+  cout << power(n) << endl;
+  
+  int x = 2;
+  cout << complexpower(x, n) << endl;
+
+  cout << addingnumbers(n) << endl;
+}
