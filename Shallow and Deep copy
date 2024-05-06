@@ -1,0 +1,41 @@
+#include <iostream>
+using namespace std;
+
+class Student{
+public:
+string name;
+int *mark;
+
+//..parametrized constructor
+Student(string n, int m){
+  name = n;
+  mark = new int(m);
+}
+
+//..copy constructor
+Student(const Student &s)
+{
+  name = s.name;
+  mark = new int(*s.mark);
+  cout << "Copy consructor invoked" << endl;
+}
+
+void mystery(Student s)
+{
+}
+
+friend ostream& operator<<(ostream& out, const Student& s)
+{
+  out << s.name << "\t\t" << *s.mark;
+  return out;
+}
+};
+
+int main() {  
+  //..create students objects
+  Student s1("Aydin", 85);
+  Student s2 = s1;
+  Student s3(s1);
+  s1.mystery(s1);
+  
+}
