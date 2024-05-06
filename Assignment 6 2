@@ -1,0 +1,237 @@
+//..main.cpp
+/******************************************************
+Author: Petru
+Teacher: Saleem
+Class: ICS4U1-2
+******************************************************/
+#include <iostream>
+#include "ticket.h"
+#include "Walkup.h"
+#include "Advanced.h"
+#include "AdvancedStu.h"
+#include <iomanip>
+using namespace std;
+
+int main() {
+  //..intializing variables
+  int choice = 0;
+  char yesno;
+  srand(time(0));
+  cout << fixed << setprecision(2) << endl;
+
+  //..start of while loop
+  while(choice != 4)
+    {
+      //..main menu
+      cout << "--- Welcome to Ticket Sale Booth ---" << endl;
+      cout << "1. Walkup Ticket" << endl;
+      cout << "2. Advance Ticket" << endl;
+      cout << "3. Student Advanced Ticket" << endl;
+      cout << "4. Quit" << endl;
+
+      //..getting user input
+      cout << "Please enter your selection: ";
+      cin >> choice;
+
+      //..checking for invalid inputs
+      while(choice <= 0 || choice > 4)
+      {
+        cout << "Invalid Input!" << endl;
+        cout << "Please enter your selection: ";
+        cin >> choice;
+      }
+
+      switch(choice)
+        {
+          //..option 1
+          case 1:
+          {
+              //..creating a random number
+              int x = rand() % 9000 + 1000;
+
+              //..creating and outputting object
+              WalkupTicket t(x);
+              cout << t << endl;
+              break;
+          }
+          //..option 2
+          case 2:
+            {
+              //..creating random number
+              int x = rand() % 9000 + 1000;
+              
+              //..intializing variable
+              int days = 0;
+
+              //..gaining user input
+              cout << "Enter days before event: ";
+              cin >> days;
+
+              //..checking for invalid inputs
+              while(days <= 0)
+                {
+                  cout << "Invalid Input!" << endl;
+                  cout << "Enter days before event: ";
+                  cin >> days;
+                }
+
+              //..creating and outputting object
+              AdvanceTicket t(x, days);
+              cout << t << endl;
+              break;
+            }
+          case 3:
+            {
+              //..creating random number
+              int x = rand() % 9000 + 1000; 
+
+              //..intializing variable
+              int days = 0;
+
+              //..getting user input
+              cout << "Enter days before event: ";
+              cin >> days;
+
+              //..checking for invalid inputs
+              while(days <= 0)
+              {
+                cout << "Invalid Input!" << endl;
+                cout << "Enter days before event: ";
+                cin >> days;
+              }
+
+              //..creating and outputting object
+              StudentAdvanceTicket t(x, days);
+              cout << t << endl;
+              break;
+            }
+        }
+      //..asking if user wants to continue
+      cout << "-------------------------------" << endl;
+      cout << "Would you like to buy another ticket? (y/n): ";
+      cin >> yesno;
+
+      //..checking for invalid inputs
+      while(yesno != 'y' && yesno != 'n')
+        {
+          cout << "Invalid Input!" << endl;
+          cout << "Would you like to buy another ticket? (y/n): ";
+          cin >> yesno;
+        }
+
+      //..break condition to end loop
+      if(yesno == 'n')
+        {
+          break;
+        }
+    }//..end of while loop
+  
+  cout << "Thank you for using the Ticket Sale Booth!" << endl;
+}
+
+//..ticket.h
+#include <iostream>
+using namespace std;
+
+//..using guards
+#ifndef TICKET_H
+#define TICKET_H
+
+//..start of class
+class Ticket{
+protected:
+//..creating variables
+int ticketNumber;
+double price;
+
+public:
+//..constructor
+Ticket(int number): ticketNumber(number){}
+
+//..virtual function
+virtual double getPrice() = 0;
+
+//..overload function
+friend ostream &operator<<(ostream &out, Ticket &ticket)
+{
+  out << "Ticket Number: " << ticket.ticketNumber << endl;
+  out << "Ticket Price: " << ticket.getPrice()<< endl;
+  return out;
+}
+
+};//..end of class
+
+#endif
+
+//.walkup.h
+#include <iostream>
+#include "ticket.h"
+using namespace std;
+
+//..start of class
+class WalkupTicket : public Ticket{
+public:
+//..constructor
+WalkupTicket(int number): Ticket(number){}
+
+//..function
+double getPrice()
+{
+  return 50;
+}
+
+};//..end of class
+
+//..advanced.h
+#include <iostream>
+#include "ticket.h"
+using namespace std;
+
+//..using guards
+#ifndef ADVANCED_H
+#define ADVANCED_H
+
+//..start of class
+class AdvanceTicket : public Ticket{
+protected:
+//..creating variables
+int daysInAdvance;
+
+public:
+//..constructor
+AdvanceTicket(int number, int daysInAdvance): Ticket(number), daysInAdvance(daysInAdvance){}
+
+//..function
+double getPrice()
+{
+  if(daysInAdvance >= 10)
+    return 30;
+  else
+    return 40;
+}
+
+};//..end of class
+
+#endif
+
+//.advancedstu.h
+#include <iostream>
+#include "Advanced.h"
+using namespace std;
+
+//..start of class
+class StudentAdvanceTicket : public AdvanceTicket{
+public:
+//..constructor
+StudentAdvanceTicket(int number, int daysInAdvance): AdvanceTicket(number, daysInAdvance){}
+
+//..function
+double getPrice()
+{
+  if(daysInAdvance >= 10)
+    return 15;
+  else
+    return 20;
+}
+
+};//..end of class
