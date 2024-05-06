@@ -1,0 +1,62 @@
+#include <iostream>
+using namespace std;
+
+// void swap(int *a, int *b);
+
+int main() {
+
+  // int x = 5;
+  // cout << "x = " << x << endl;
+  // cout << "&x = " << &x << endl;
+
+  // int *ptr = &x;
+  // cout << ptr << endl;
+  
+  // cout << *ptr << endl;
+
+  // int x = 25, y = 20, z = 75;
+  // int *ptr;
+
+  // cout << x << "\t" << y << "\t" << z << "\t" << endl;
+
+  // ptr = &x;
+  // *ptr = *ptr * 10;
+
+  // ptr = &y;
+  // *ptr = *ptr * 10;
+
+  // ptr = &z;
+  // *ptr = *ptr * 10;
+  
+  // cout << x << "\t" << y << "\t" << z << "\t" << endl;
+
+  int arr[] ={4, 8, 9, 3, 12};
+
+  // int *ptr = arr;
+  
+  // for(int i = 0; i < 5; i++)
+  //   {
+  //     cout << arr << endl; //..this gives teh address of the first eleelleelelelelemenenent
+
+  //     cout << *(arr + i) << endl;
+
+  //     cout << *(ptr + i) << endl;
+  //   }
+
+  // int x = 5, y = 50;
+  // cout << x << y << endl;
+
+  // swap(&x, &y);
+  // cout << x << y << endl;
+
+  // cout << x << y << endl;//..refrererererererenenenencncnenecncencenwecnecc
+  
+}
+
+// void swap(int *a, int *b)
+// {
+//   int temp;
+//   temp = *a;
+//   *a = *b;
+//   *b = temp;
+// }
