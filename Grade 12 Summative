@@ -1,0 +1,991 @@
+//..main.cpp
+#include <iostream>
+#include <vector>
+#include <string>
+#include "Library.h"
+using namespace std;
+
+int main() {
+  //..intializing variables
+  string first;
+  string last;
+
+  //..outputing to console
+  cout << "--------------------------------" << endl;
+  cout << "Welcome to the Library Software!" << endl;
+  cout << "--------------------------------" << endl;
+
+  //..gaining user input
+  cout << "Please enter your first name: ";
+  getline(cin, first);
+  
+  cout << "Please enter your last name: ";
+  getline(cin, last);
+  cout << endl;
+
+  srand(time(0));
+
+  //..calling function
+  menu(first, last);
+}
+
+//..library.h
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+
+//..function protoype
+void menu(string first, string last);
+
+class Object//..start of class object
+{
+//...intializing data fields
+protected:
+string name;
+string author;
+
+public:
+
+//..default constructor
+Object(){}
+
+//..parameterized constructor
+Object(string name, string author):name(name), author(author){}
+
+//..getters
+string getName() const {return name;}
+string getAuthor() const {return author;}
+
+//..setters
+void setName(string s){name = s;}
+void setAuthor(string s){author = s;}
+
+int returnday()
+{
+  return 0;
+}
+
+};//..end of class object
+
+class Fictionbook : public Object //..start of fictionbook class
+{
+public:
+//..no arg constructor
+Fictionbook(){name = "", author = "";}
+
+//..paramaterized constructor
+Fictionbook(string name, string author):Object(name, author){}
+
+//..return day method
+int returnday()
+{
+  return 10;
+}
+
+//..rating method
+int rating()
+{
+  return rand() % 10 + 1;
+}
+};//..end of fictionbook class
+
+class Nonfiction : public Object //..start of nonfiction class
+{
+public:
+//..no arg constructor
+Nonfiction(){name = "", author = "";}
+
+//..parameterized constructor
+Nonfiction(string name, string author):Object(name, author){}
+
+//..returnday method
+int returnday()
+{
+  return 15;
+}
+
+//..credibility method
+string credibility()
+{
+  //..creating random number
+  int cred = rand() % 10 + 1;
+
+  //..returning appropiate rating
+  if(7 <= cred && cred <= 10)
+    return "Very Credible.";
+
+  else if(5 < cred && cred < 7)
+    return "Somewhat Credible.";
+
+  else 
+    return "Not Credible.";
+}
+};//..end of nonfiction class
+
+class Othermedia : public Object //..start of othermedia class
+{
+public:
+//..no arg constructor
+Othermedia(){name = "", author = "";}
+
+//..parameterized constructor
+Othermedia(string name, string author):Object(name, author){}
+
+//..return day method
+int returnday()
+{
+  return 5;
+}
+
+//..reviews method
+string reviews()
+{
+  //..creating random numbers
+  int review = rand() % 11;
+
+  //..assigning appropiate reviews
+  if(review >= 7)
+    return ("Very Positive Reviews, " + to_string(review) + "/10");
+
+  else if(review > 4 && review < 7)
+    return ("Somewhat Positive Reviews, " + to_string(review) + "/10");
+
+  else if(review <= 4 && review > 0)
+    return ("No Positive Reviews, " + to_string(review) + "/10");
+
+  else
+    return ("Complete fail, 0/10");
+}
+};//..end of othermedia class
+
+//..library.cpp
+#include <iostream>
+#include <vector>
+#include <string>
+#include "Library.h"
+using namespace std;
+
+struct Holds //..struct intialization
+{
+string type;
+string author;
+string name;
+};
+
+void menu(string first, string last)
+{
+  //..intialization list
+  int option = 0;
+  int choice1 = 0;
+  string Fictionname;
+  string author;
+  Fictionbook A;
+  vector<Fictionbook> list1;
+  vector<int> rating;
+  string NonFname;
+  Nonfiction B;
+  vector<Nonfiction> list2;
+  vector<string> cred;
+  string othername;
+  Othermedia C;
+  vector<Othermedia> list3;
+  vector<string> reviews;
+  int choice2 = 0;
+  int returnchoice1;
+  vector<Holds> arr;
+  string type;
+  string creator;
+  string title;
+  int holdschoice;
+  double total = 0;
+  int days;
+  
+  while(option != 6)//..start of main while loop
+    {
+      //..intialized variable
+      char yesno = ' ';
+
+      //..menu output to console
+      cout << "Please select an option from below: " << endl;
+      cout << "Option 1: Withdraw" << endl;
+      cout << "Option 2: Return" << endl; 
+      cout << "Option 3: Holds" << endl; 
+      cout << "Option 4: Inventory" << endl;
+      cout << "Option 5: Summary of Account" << endl;
+      cout << "Option 6: Exit" << endl; //..error trap then comment + fix spacing + take in string
+      cout << "----------------------------" << endl;
+      cout << "Please Input: ";
+      
+      //..checking for invalid input
+      while(!(cin >> option) || option < 1 || option > 6)
+        {//..start of while loop
+          cout << "Invalid Input. Please try again." << endl;
+          cout << "Please Input: ";
+          cin.clear();
+          cin.ignore(10000, '\n'); 
+        }//..end of while loop
+
+      if(option == 1)//..case 1
+      {
+        //..output to console
+        cout << "This is the Withdrawal Screen " << endl;
+        cout << "Here you can take out as many books as you wish." << endl;
+        cout << "When you make your selection you will have an option of 3 types." << endl;
+        choice1 = 0;
+        //..main selection for withdrawal option
+        while(choice1 != 4)
+          {
+            //..menu output to console
+            cout << "1. Fiction \n2. Non-Fiction \n3. Other Materials \n4. Quit" << endl;
+            cout << "Please Input: ";
+
+            //..checking for user input
+            while(!(cin >> choice1) || choice1 < 1 || choice1 > 4)
+            {//..start of while loop
+              cout << "Invalid Input. Please try again." << endl;
+              cout << "Please Input: ";
+              cin.clear();
+              cin.ignore(10000, '\n');
+            }//..end of while loop
+            
+            switch(choice1)//..start of switch statement
+              {
+                case 1:
+                  {
+                    //..output to console
+                    cout << "To quit adding fiction books, enter n." << endl;
+
+                    //..intialization list
+                    int i = rating.size();
+                    yesno = ' ';
+
+                    //..user input menu
+                    while(yesno != 'n')
+                      {
+                        //..gaining user input
+                        cin.ignore();
+                        cout << "Please enter the name of book: ";
+                        getline(cin, Fictionname);
+                        cout << "Please enter the Author: ";
+                        getline(cin, author); 
+
+                        //..working with classes
+                        A.setName(Fictionname);
+                        A.setAuthor(author);
+                        rating.push_back(A.rating());
+
+                        //..outputing rating to console
+                        cout << "Your book's rating is: " << rating[i] << endl;
+                        list1.push_back(A);
+
+                        //..console output
+                        cout << "You have 10 days to return." << endl;
+                        i++;
+                        cout << endl;
+
+                        //..gaining user input
+                        cout << "Do you wish to continue, (y/n): ";
+                        cin >> yesno;
+
+                        //..checking for invalid input
+                        while(yesno != 'n' && yesno != 'y')
+                          {//..start of while loop
+                            cin.ignore(10000, '\n');
+                            cout << "Invalid Input. Please try again." << endl;
+                            cout << "Do you wish to continue: ";
+                            cin >> yesno;
+                          }//..end of while loop
+                        cout << endl;
+                  }//..end of while loop
+                break;
+              }//..end of case 1
+
+                case 2:
+                  {
+                    //..output to console
+                    cout << "To quit adding non-fiction books, enter n." << endl;
+
+                    //..intializing variables
+                    int i = cred.size();
+                    yesno = ' ';
+
+                    //..user input menu
+                    while(yesno != 'n')
+                      {
+                        //..gaining user input
+                        cin.ignore();
+                        cout << "Please enter the name of the book: ";
+                        getline(cin, NonFname);
+                        cout << "Please enter the Author: ";
+                        getline(cin, author);
+
+                        //..working with classes
+                        B.setName(NonFname);
+                        B.setAuthor(author);
+                        cout << endl;
+                        cred.push_back(B.credibility());
+
+                        //..output to console
+                        cout << "Your book's credibility is: " << cred[i] << endl;
+                        cout << "You have 15 days to return." << endl;
+                        cout << endl;
+                        list2.push_back(B);
+                        i++;
+
+                        //..gaining user input
+                        cout << "Do you wish to continue (y/n): ";
+                        cin >> yesno;
+
+                        //..checking for invalid input
+                        while(yesno != 'n' && yesno != 'y')
+                        {//..start of while loop
+                          cin.ignore(10000, '\n');
+                          cout << "Invalid Input. Please try again." << endl;
+                          cout << "Do you wish to continue: ";
+                          cin >> yesno;
+                        }//..end of while loop
+                        cout << endl;
+                      }//..end of while loop
+                    break;
+                }//..end of case 2
+
+                case 3:
+                  {
+                    //..output to console
+                    cout << "To quit adding other media, enter n." << endl;
+
+                    //..intializing variables
+                    int i = reviews.size();
+                    char yesno = ' ';
+
+                    //..user input menu
+                    while(yesno != 'n')
+                      {
+                        //..gaining user input
+                        cin.ignore();
+                        cout << "Enter the title, name, or product: ";
+                        getline(cin, othername);
+                        cout << "Please enter the author, director, or publisher: ";
+                        getline(cin, author);
+
+                        //..working with classes
+                        C.setName(othername);
+                        C.setAuthor(author);
+                        reviews.push_back(C.reviews());
+                        cout << "The reviews on this piece of material is: " << reviews[i] << endl;
+                        cout << "You have 5 days to return." << endl;
+                        cout << endl;
+                        list3.push_back(C);
+                        i++;
+
+                        //..gaining user input
+                        cout << "Do you wish to continue (y/n): ";
+                        cin >> yesno;
+
+                        //..checking for invalid input
+                        while(yesno != 'n' && yesno != 'y')
+                        {//..start of while loop
+                          cin.ignore(10000, '\n');
+                          cout << "Invalid Input. Please try again." << endl;
+                          cout << "Do you wish to continue: ";
+                          cin >> yesno;
+                        }//..end of while loop
+                        cout << endl;
+                      }//..end of while loop
+                  break;
+                }//..end of case 3
+
+                case 4:
+                  {
+                    //..output to console
+                    cout << "Here is a summary of the books you have taken out: " << endl;
+                    cout << "---------------------------------------------------" << endl;
+                    cout << "Fiction Books: " << endl;
+                    cout << "---------------" << endl;
+
+                    //..outputing fiction books to console
+                    for(int i = 0; i < list1.size(); i++)
+                      {//..start of for loop
+                        cout << "Name: " << list1[i].getName() << endl;
+                        cout << "Author: " << list1[i].getAuthor() << endl;
+                        cout << "Rating: " << rating[i] << endl;
+                        cout << endl;
+                      }//..end of for loop
+                    cout << endl;
+
+                    //..outputing nonfiction books to console
+                    cout << "---------------------------------------------------" << endl;
+                    cout << "Non-Fiction Books: " << endl;
+                    cout << "---------------" << endl;
+                    for(int i = 0; i < list2.size(); i++)
+                      {//..start of for loop
+                        cout << "Name: " << list2[i].getName() << endl;
+                        cout << "Author: " << list2[i].getAuthor() << endl;
+                        cout << "Credibility: " << cred[i] << endl;
+                        cout << endl;
+                      }//..end of for loop
+                    cout << endl;
+
+                    //..outputing other media to consoles
+                    cout << "---------------------------------------------------" << endl;
+                    cout << "Other media: " << endl;
+                    cout << "---------------" << endl; 
+                    for(int i = 0; i < list3.size(); i++)
+                      {//..start of for loop
+                        cout << "Name: " << list3[i].getName() << endl;
+                        cout << "Author/Director/Publisher: " << list3[i].getAuthor() << endl;
+                        cout << "Reviews: " << reviews[i] << endl;
+                        cout << endl;
+                      }//..end of for loop
+                    cout << "---------------------------------------------------" << endl;
+                    cout << endl;
+                    break;
+                }//..end of case 4
+              }//..end of switchcase
+            }//..end of while loop
+      }//..end of option 1
+
+      else if(option == 2)
+      {
+        //..outputting inavlid choice if user choose option 2 without any objects taken out
+        if(list1.size() == 0 && list2.size() == 0 && list3.size() == 0)
+          cout << "Currently you have nothing taken out, so you cannot return." << endl << endl;
+          
+        else
+        {
+          //..outputing to console
+          yesno = ' ';
+          cout << "This is the Return Screen" << endl;
+          cout << "-------------------------" << endl;
+          cout << "Here you can return as many books as you wish." << endl;
+          cout << "A display will come up, in which you can decide which books to return." << endl;
+          cout << "You will be asked to input the days you have had the book." << endl;
+          cout << "If the book is overdue, a fee of $2, and if it is not a book, then a fee of $3.50 will be charged." << endl;
+          choice2 = 0;
+
+          //..user input menu
+          while(choice2 != 4)
+            {
+              //..outputing to console
+              cout << "1. Fiction \n2. Non-Fiction \n3. Other Materials \n4. Quit" << endl;
+              cout << "Please Input: ";
+
+              //..checking for invalid inputs
+              while(!(cin >> choice2) || choice2 < 1 || choice2 > 4)
+              {//..start of while loop
+                cout << "Invalid Input. Please try again." << endl;
+                cout << "Please Input: ";
+                cin.clear();
+                cin.ignore(10000, '\n');
+              }//..end of while loop
+
+              //..start of switchcase
+              switch(choice2)
+                {
+                  case 1:
+                  {
+                    if(list1.size() == 0)
+                    {
+                      cout << "There are no fiction books to return." << endl << endl;
+                      break;
+                    }
+                    //..outputing to console
+                    yesno = ' ';
+                    cout << "To quit returning books, enter n." << endl;
+                    while(yesno != 'n')
+                      {//..start of while loop
+                        //..outputing to console
+                        for(int i = 0; i < list1.size(); i++)
+                        {//..start of for loop
+                          cout << (i + 1) << ") " << endl;
+                          cout << "Name: " << list1[i].getName() << endl;
+                          cout << "Author: " << list1[i].getAuthor() << endl;
+                          cout << "Rating: " << rating[i] << endl;
+                          cout << endl;
+                        }//..end of for loop
+
+                        //..gaining user input
+                        cout << "Which book would you like to return: ";
+
+                        while(!(cin >> returnchoice1) || returnchoice1 < 0 || returnchoice1 > list1.size())
+                        {//..start of while loop
+                          cin.clear();
+                          cin.ignore(10000, '\n');
+                          cout << "Invalid Input. Please try again." << endl;
+                          cout << "Please Input: ";
+                        }//..end of while loop
+                        
+                        cout << "How many days has it been since you took out the book: ";
+
+                        while(!(cin >> days) || days < 0)
+                        {//..start of while loop
+                          cin.clear();
+                          cin.ignore(10000, '\n');
+                          cout << "Invalid Input. Please try again." << endl;
+                          cout << "Please Input: ";
+                        }//..end of while loop
+
+                        
+                        if(days > 10)
+                        {
+                          cout << "It seems you returned an overdue book, a charge of $2 will be added." << endl << endl;
+                          total += 2;
+                        }
+
+                        else if(days <= 10)
+                          cout << "Thank you for returning the book!" << endl << endl;
+
+                        //..working with classes
+                        returnchoice1--;
+                        vector<Fictionbook> :: iterator it;
+                        vector<int> :: iterator it2;
+                        it = list1.begin();
+                        it2 = rating.begin();
+
+                        //..working with vectors
+                        list1.erase(it + returnchoice1);
+                        rating.erase(it2 + returnchoice1);
+
+                        //..gaining user input
+                        cout << "Do you wish to continue: ";
+                        cin >> yesno;
+
+                        //..checking for invalid input
+                        while(yesno != 'n' && yesno != 'y')
+                        {//..start of while loop
+                          cin.ignore(10000, '\n');
+                          cout << "Invalid Input. Please try again." << endl;
+                          cout << "Do you wish to continue: ";
+                          cin >> yesno;
+                        }//..end of while loop
+                        
+                        if(list1.size() == 0)
+                        {
+                          cout << "You cannot return anymore books." << endl << endl;
+                          break;
+                        }
+                      }//..end of while loop
+                    break;
+                  }//..end of case 1
+
+                  case 2:
+                  {
+                    if(list2.size() == 0)
+                    {
+                      cout << "There are no books to return." << endl << endl;
+                      break;
+                    }
+                    
+                    //..outputing to console
+                    yesno = ' ';
+                    cout << "To quit returning books, enter n." << endl;
+
+                    //..ouputing to console
+                    while(yesno != 'n')
+                      {//..start of while loop
+                        for(int i = 0; i < list2.size(); i++)
+                        {//..end of while loop
+                          cout << (i + 1) << ") " << endl;
+                          cout << "Name: " << list2[i].getName() << endl;
+                          cout << "Author: " << list2[i].getAuthor() << endl;
+                          cout << "Credibility: " << cred[i] << endl;
+                          cout << endl;
+                        }//..end of for loop
+
+                        //..gaing user input
+                        cout << "Which book would you like to return: ";
+
+                        while(!(cin >> returnchoice1) || returnchoice1 < 0 || returnchoice1 > list2.size())
+                        {//..start of while loop
+                          cin.clear();
+                          cin.ignore(10000, '\n');
+                          cout << "Invalid Input. Please try again." << endl;
+                          cout << "Please Input: ";
+                        }//..end of while loop
+                        cout << "How many days has it been since you took out the book: ";
+
+                        while(!(cin >> days) || days < 0)
+                        {//..start of while loop
+                          cout << "Invalid Input. Please try again." << endl;
+                          cout << "Please Input: ";
+                        }//..end of while loop
+
+                        if(days > 15)
+                        {
+                          cout << "It seems you returned an overdue book, a charge of $2 will be added." << endl << endl;
+                          total += 2;
+                        }
+
+                        else if(days <= 15)
+                          cout << "Thank you for returning the book!" << endl << endl;
+
+                        //..working with classes
+                        returnchoice1--;
+                        vector<Nonfiction> :: iterator it;
+                        vector<string> :: iterator it2;
+                        it = list2.begin();
+                        it2 = cred.begin();
+
+                        //..working with vectors
+                        list2.erase(it + returnchoice1);
+                        cred.erase(it2 + returnchoice1);
+
+                        //..gaining user input
+                        cout << "Do you wish to continue: ";
+                        cin >> yesno;
+
+                        //..checking for invalid input
+                        while(yesno != 'n' && yesno != 'y')
+                        {//..start of while loop
+                          cin.ignore(10000, '\n');
+                          cout << "Invalid Input. Please try again." << endl;
+                          cout << "Do you wish to continue: ";
+                          cin >> yesno;
+                        }//..end of while loop
+                        if(list2.size() == 0)
+                        {
+                          cout << "You cannot return anymore books." << endl << endl;
+                          break;
+                        }
+                      }//..end of while loop
+                    break;
+                  }//..end of case 2
+                  
+                  case 3:
+                  {
+                    if(list3.size() == 0)
+                    {
+                      cout << "There is no media to return." << endl << endl;
+                      break;
+                    }
+                    //..outputing to console
+                    yesno = ' ';
+                    cout << "To quit returning media, enter n." << endl;
+
+                    //..outputing to console
+                    while(yesno != 'n')
+                      {//..start of while loop
+                        for(int i = 0; i < list3.size(); i++)
+                        {//..start of for loop
+                          cout << (i + 1) << ") " << endl;
+                          cout << "Name: " << list3[i].getName() << endl;
+                          cout << "Author/Director/Publisher: " << list3[i].getAuthor() << endl;
+                          cout << "Reviews: " << reviews[i] << endl;
+                          cout << endl;
+                        }//..end of for loop
+
+                        //..gaining user input
+                        cout << "Which book would you like to return: ";
+
+                        while(!(cin >> returnchoice1) || returnchoice1 < 0 || returnchoice1 > list3.size())
+                        {//..start of while loop
+                          cin.clear();
+                          cin.ignore(10000, '\n');
+                          cout << "Invalid Input. Please try again." << endl;
+                          cout << "Please Input: ";
+                        }//..end of while loop
+                        cout << "How many days has it been since you took out the media: ";
+
+                        while(!(cin >> days) || days < 0)
+                        {//..start of while loop
+                          cin.clear();
+                          cin.ignore(10000, '\n');
+                          cout << "Invalid Input. Please try again." << endl;
+                          cout << "Please Input: ";
+                        }//..end of while loop
+                        
+                        if(days > 5)
+                        {
+                          cout << "It seems you returned an overdue book, a charge of $3.50 will be added." << endl << endl;
+                          total += 3.50;
+                        }
+
+                        else if(days <= 5)
+                          cout << "Thank you for returning the media!" << endl << endl;
+
+                        //..working with classes
+                        returnchoice1--;
+                        vector<Othermedia> :: iterator it;
+                        vector<string> :: iterator it2;
+                        it = list3.begin();
+                        it2 = reviews.begin();
+
+                        //..working with vectors
+                        list3.erase(it + returnchoice1);
+                        reviews.erase(it2 + returnchoice1);
+
+                        //..gaining user input 
+                        cout << "Do you wish to continue: ";
+                        cin >> yesno;
+
+                        //..checking for invalid inputs
+                        while(yesno != 'n' && yesno != 'y')
+                        {//..start of while loop
+                          cin.ignore(10000, '\n');
+                          cout << "Invalid Input. Please try again." << endl;
+                          cout << "Do you wish to continue: ";
+                          cin >> yesno;
+                        }//..end of while loop
+                        if(list3.size() == 0)
+                        {
+                          cout << "You cannot return anymore media." << endl << endl;
+                          break;
+                        }
+                      }//..end of while loop
+                    break;
+                  }//..end of case 3
+                }//..end of switch statement
+            }//..end of main while loop
+        }//..end of else statement
+      }//..end of option 2
+        
+      else if(option == 3)//..start of case 3
+      {
+        //..outputing to console
+        cout << "This is your hold/wishlist screen." << endl;
+        cout << "----------------------------------" << endl;
+        cout << "This page contains the books you wish to take out." << endl;
+        cout << "You can keep books on hold indefinitely as this is your wishlist." << endl;
+        cout << "If you takeout a book, and that book is on hold, it will not be \nremoved as the holds in this system only act as a marker for the \nlibrary to understand that book/object in their system is wanted." << endl;
+        cout << "No matter the type of object, you have a max of 5 holds." << endl << endl;
+        yesno = ' ';
+        char deleteornot = ' ';
+
+        //..gaining user input
+        cout << "Do you wish to add (y) or delete a book (n) from your holds list: ";
+        cin >> deleteornot;
+
+        //..checking for invalid input
+        while(deleteornot != 'n' && deleteornot != 'y')
+        {
+          cin.ignore(10000, '\n');
+          cout << "Invalid Input. Please try again: ";
+          cin >> deleteornot;
+        }
+
+        //..case 1
+        if(deleteornot == 'y')
+        {  
+          //..checking for maximum holds
+          if(arr.size() == 5)
+            cout << "You have reached the maximum number of holds" << endl;
+
+          //..user input menu
+          else if(arr.size() < 5)
+          {
+            //..outputing to console
+            yesno = ' ';
+            cout << "You have " << 5 - arr.size()<< " holds possible.";
+            cout << "Enter n to quit." << endl << endl;
+            
+            for(int i = arr.size(); i < 5; i++)
+              {//..start of for loop
+
+                //..gaining user input
+                cin.ignore();
+                cout << "Enter the genre (Fiction, Non-Fiction, Other): ";
+                getline(cin, type);
+                cout << "Enter the title of the object: ";
+                getline(cin, title);
+                cout << "Enter the Author/Director/Publisher: ";
+                getline(cin, creator);
+
+                //..creating struct variable
+                Holds x;
+
+                //..declaring struct variable
+                x.type = type;
+                x.author = creator;
+                x.name = title;
+
+                //..working with vectors
+                arr.push_back(x);
+
+                //..gaining user input
+                cout << "Do you wish to continue: ";
+                cin >> yesno;
+
+                //..checking for invalid input
+                while(yesno != 'n' && yesno != 'y')
+                {//..start of while loop
+                  cin.ignore(10000, '\n');
+                  cout << "Invalid Input. Please try again." << endl;
+                  cout << "Do you wish to continue: ";
+                  cin >> yesno;
+                }//..end of while loop
+
+                //..checking ending condition
+                if(yesno == 'n')
+                  break;
+              }//..end of for loop
+          }//..end of user input menu
+        }//..end of the add case
+
+        //..case 2
+        else if(deleteornot == 'n')
+        {
+          //..checking arr size
+          if(arr.size() == 0)
+          {
+            cout << "You can not delete any holds at this time." << endl << endl;
+          }
+
+          //..user input menu
+          else
+          {
+            yesno = ' ';
+            while(yesno != 'n')
+              {//..start of while loop
+                
+                for(int i = 0; i < arr.size(); i++)
+                  {//..start of for loop
+                    //..outputing to console
+                    cout << (i + 1) << ") " << endl;
+                    cout << "Genre: " << arr[i].type << endl;
+                    cout << "Title: " << arr[i].name << endl;
+                    cout << "Author/Director/Publisher: " << arr[i].author << endl;
+                    cout << endl;
+                  }//..end of for loop
+
+                //..gaining user input
+                cout << "Please enter which book you wish to delete: ";
+
+                while(!(cin >> holdschoice) || holdschoice < 0 || holdschoice > arr.size())
+                {//..start of while loop
+                  cin.clear();
+                  cin.ignore(10000, '\n');
+                  cout << "Invalid Input. Please try again." << endl;
+                  cout << "Please Input: ";
+                }//..end of while loop
+                
+                //..working with clases
+                holdschoice--;
+                vector<Holds> :: iterator it3;
+                it3 = arr.begin();
+                arr.erase(it3 + holdschoice);
+
+                //..gaining user input
+                cout << "Do you wish to continue: ";
+                cin >> yesno;
+
+                //..checking for invalid inputs
+                while(yesno != 'n' && yesno != 'y')
+                {//..start of while loop
+                  cin.ignore(10000, '\n');
+                  cout << "Invalid Input. Please try again." << endl;
+                  cout << "Do you wish to continue: ";
+                  cin >> yesno;
+                }//..end of while loop
+
+                if(arr.size() == 0)
+                {
+                  cout << "You can not delete any holds at this time." << endl << endl;
+                  break;
+                }
+              }//..end of while loop
+          }//..end of else case
+        }//..end of delete case
+      }//..end of option 3
+
+      else if(option == 4)//..option 4
+      {
+        //..output to console
+        cout << "Here is your inventory: " << endl;
+        cout << "------------------------" << endl;
+        cout << "Books withdrawn: " << endl;
+        cout << "-----------------" << endl;
+        cout << "Fiction: " << endl;
+        cout << "---------" << endl;
+
+        //..outputing fiction books to console
+        for(int i = 0; i < list1.size(); i++)
+          {//..start of for loop
+            cout << (i + 1) << " )" << endl;
+            cout << "Name: " << list1[i].getName() << endl;
+            cout << "Author: " << list1[i].getAuthor() << endl;
+            cout << "Rating: " << rating[i] << endl;
+            cout << "Due Date: " << list1[i].returnday() << endl;
+            cout << endl;
+          }//..end of for loop
+
+        //..outputing nonfiction books to console
+        cout << "Non-Fiction: " << endl;
+        cout << "-------------" << endl;
+        for(int i = 0; i < list2.size(); i++)
+          {//..start of for loop
+            cout << (i + 1) << " )" << endl;
+            cout << "Name: " << list2[i].getName() << endl;
+            cout << "Author: " << list2[i].getAuthor() << endl;
+            cout << "Credibility: " << cred[i] << endl;
+            cout << "Due Date: " << list2[i].returnday() << endl;
+            cout << endl;
+          }//..end of for loop
+
+        //..outputing other media to console
+        cout << "Other Media: " << endl;
+        cout << "-------------" << endl;
+        for(int i = 0; i < list3.size(); i++)
+          {//..start of for loop
+            cout << (i + 1) << " )" << endl;
+            cout << "Title: " << list3[i].getName() << endl;
+            cout << "Author/Director/Publisher: " << list3[i].getAuthor() << endl;
+            cout << "Reviews: " << reviews[i] << endl;
+            cout << "Due Date: " << list3[i].returnday() << endl;
+            cout << endl;
+          }//..end of for loop
+
+        //..outputing holds to console
+        cout << "Holds: " << endl;
+        cout << "-------" << endl;
+        for(int i = 0; i < arr.size(); i++)
+          {//..start of for loop
+            cout << (i + 1) << " )" << endl;
+            cout << "Genre: " << arr[i].type << endl;
+            cout << "Title: " << arr[i].name << endl;
+            cout << "Author/Director/Publisher: " << arr[i].author << endl;
+            cout << endl;
+          }//..end of for loop
+
+      }//..end of option 4
+
+      else if(option == 5)//..option 5
+      {
+        //..output to console
+        yesno = ' ';
+        cout << "This is the account information page. " << endl;
+        cout << "--------------------------------------" << endl;
+        cout << "Account Name: " << first << " " << last << endl;
+        cout << "You have outstanding fees of: $"  << total << endl;
+        cout << "You have a total of " << list1.size() + list2.size() + list3.size() << " objects taken out." << endl;
+        cout << "You have " << arr.size() << " holds." << endl;
+        cout << "--------------------------------------" << endl;
+
+        //..gaining user input
+        if(total > 0)
+        {
+          cout << "Do you wish to pay your fees? (y/n): ";
+          cin >> yesno;
+
+          //..checking for invalid input
+          while(yesno != 'n' && yesno != 'y')
+          {
+            cin.ignore(10000, '\n');
+            cout << "Invalid Input. Please try again." << endl;
+            cout << "Do you wish to continue: ";
+            cin >> yesno;
+          }
+        }
+
+        //..paying fees case
+        if(yesno == 'y')
+        {
+          cout << "You have paid your fees." << endl;
+          total = 0;
+        }
+      }//..end of option 5
+
+      else if(option == 6)//..option 6
+        cout << "Thank you for using the library system." << endl;
+    }//..end of main while loop
+}//..end of menu function
