@@ -1,0 +1,56 @@
+#include <iostream>
+using namespace std;
+
+/* void print(string s)
+{
+  int n = s.size();
+  //..just check yesterday's lesson
+} */
+
+/* void print(string s, int startIndex)
+{a
+  //..base case
+  if(startIndex == s.size() - 1)
+  {
+    cout << s.at(startIndex) << endl;
+  }
+
+  else{
+    cout << s.at(startIndex) << endl;
+    print(s, startIndex + 1);
+  }
+}
+
+void print(string s) {print(s, 0);} //..overloading */
+
+void reverse(string s, int endIndex)
+{
+  if(endIndex == 0)
+    cout << s.at(endIndex);
+  else
+  {
+    cout << s.at(endIndex);
+    reverse(s, endIndex - 1);
+  }
+}
+
+
+/* void reverse(string s, int start){
+  int n = s.size();
+  if(n == 1)
+    cout << s << endl;
+
+  else
+  {
+    cout << s[n - 1];
+    reverse(s.substr(0, n - 1), start);
+  }
+} */
+
+void reverse(string s) {reverse(s, 0);} //..wrapper funtion
+
+int main() {
+  string s = "ABCD";
+  //print(s, 0);
+  reverse(s);
+}
