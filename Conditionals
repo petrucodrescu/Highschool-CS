@@ -1,0 +1,41 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+  /*int score = 95;
+  if (score > 50)
+    cout << "Passed" << endl;*/
+
+  /*int score = 45;
+  if (score > 50)
+    cout << "Passed" << endl;
+
+  else
+    cout << "Failed" << endl;*/
+
+  /*int score = 90;
+  if (score >= 90) {
+    cout << "The Grade is A";
+  }
+  else if (score > 50 && score < 90)
+  {
+    cout << "The Grade is a B";
+  }
+  else
+    cout << "Failed";*/
+
+  /*int num1, num2, ans;
+  char op;
+  cout << "Enter 2 numbers: ";
+  cin >> num1 >> num2;
+
+  cout << "Enter operation: ";
+  cin >> op;
+  switch(op){
+    case '+':
+      ans = num1 + num2;
+      cout << num1 << op << num2 << ans;
+      break;
+      
+  }*/
+}
