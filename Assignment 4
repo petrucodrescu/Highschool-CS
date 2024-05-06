@@ -1,0 +1,284 @@
+//..main.cpp file
+#include <iostream>
+#include <fstream>
+#include "assign_4.h"
+
+using namespace std;
+
+int main() {
+  //..outputting header
+  cout << "Bank Account Class Question: " << endl;
+
+  //..setting file access
+  ifstream fin;
+  fin.open("data.txt");
+
+  //..decleration and intialization of variables
+  const int size = 5;
+  Account account[size];
+  string name;
+  int id;
+  double balance;
+
+  //..going through the text file
+  for(int i = 0; i < size; i++)//..start of loop
+    {
+      //..getting data from the lines
+      getline(fin, name);
+      fin >> id;
+      fin >> balance;
+      
+      //..ignoring the spaces in between
+      fin.ignore();
+      fin.ignore();
+      
+      //..setting elements to data
+      account[i].setname(name);
+      account[i].setid(id);
+      account[i].setbalance(balance);
+    }//..end of loop
+
+  fin.close(); //..closing the file
+  
+  for(int i = 0; i < size; i++)//..start of for loop
+    {
+      //..outputting their current balance to the console
+      cout << "Account Number: " << account[i].getname() << endl;
+      cout << "Id Number: " << account[i].getid() << endl;
+      cout << "Balance: $" << account[i].getbalance() << endl;
+    }//..end of for loop
+
+  cout << endl << "After Deposit: " << endl;
+  for(int i = 0; i < size; i++)//..start of for loop
+    {
+      //..outputting their balance after deposit to console
+      cout << "Account Number: " << account[i].getname() << endl;
+      cout << "Id Number: " << account[i].getid() << endl;
+      cout << endl;
+      //..accessing the deposit function in the account class
+      account[i].deposit();
+      cout << endl;
+      cout << "Balance: $" << account[i].getbalance() << endl;
+      cout << endl;
+    }//..end of foor loop
+
+  cout << endl << "After Withdraw: " << endl;
+  for(int i = 0; i < size; i++)//..start of for loop
+  {
+    //..outputting their balance after withdraw to console
+    cout << "Account Number: " << account[i].getname() << endl;
+    cout << "Id Number: " << account[i].getid() << endl;
+    cout << endl;
+    //..accessing the withdraw function in the account class
+    account[i].withdraw();
+    cout << endl;
+    cout << "Balance: $" << account[i].getbalance() << endl;
+    cout << endl;
+  }//..end of for loop
+
+  //..outputting header
+  cout << "Quadratic Class Question: " << endl;
+  
+  //..gaining input from the user
+  double a;
+  cout << "Input a: ";
+  cin >> a;
+
+  double b;
+  cout << "Input b: ";
+  cin >> b;
+
+  double c;
+  cout << "Input c: ";
+  cin >> c;
+
+  //..creating object in the quadratic class
+  Quadratic eq(a, b, c);
+
+  //..ouputting the discriminant to console
+  cout << "The discriminant is: " << eq.getdiscriminant() << endl;
+
+  //..outputting the no real roots message to the console
+  if(eq.getdiscriminant() < 0)
+    cout << "There is no real roots" << endl;
+
+  //..outputting the roots if there are 2
+  if(eq.getdiscriminant() > 0 )
+  {
+    cout << "x1 is: " << eq.getRoot1() << endl;
+    cout << "x2 is: " << eq.getRoot2() << endl;
+  }
+
+  //..outputting the root if there is only 1
+  if(eq.getdiscriminant() == 0)
+    cout << "The only zero is: " << eq.getRoot1() << endl;
+}
+
+//..assign_4.h
+#include <iostream>
+using namespace std;
+
+class Account{//..start of class
+
+private:
+//..variable declaration
+string name;
+int id;
+double balance;
+
+public:
+//..no arg constructor
+Account(){
+  name = " ";
+  id = 0;
+  balance = 0;
+}
+
+//..constructor
+Account(string name, int id, double balance): name(name), id(id), balance(balance){}
+
+//..getters
+string getname(){return name;}
+int getid(){return id;}
+double getbalance(){return balance;}
+
+//..setters
+void setname(string name){this -> name = name;}
+void setid(int id){this -> id = id;}
+void setbalance(int balance){this -> balance = balance;}
+
+//..function calls
+void deposit();
+void withdraw();
+
+};//..end of class
+
+class Quadratic{//..start of class
+
+private:
+//..variable decleration
+double a;
+double b;
+double c;
+
+public:
+//..no arg constructor
+Quadratic(){
+  a = 0;
+  b = 0;
+  c = 0;
+}
+
+//..constructor
+Quadratic(double a, double b, double c): a(a), b(b), c(c){}
+
+//..getters
+double geta(){return a;}
+double getb(){return b;}
+double getc(){return c;}
+
+//..setters
+void seta(double a){this -> a = a;}
+void setb(double b){this -> b = b;}
+void setc(double c){this -> c = c;}
+
+//..function calls
+double getdiscriminant();
+double getRoot1();
+double getRoot2();
+};
+
+//..assign.cpp
+#include <iostream>
+#include <cmath>
+#include "assign_4.h"
+
+using namespace std;
+
+//..start of deposit function
+void Account::deposit(){
+  //..outputting to console
+  cout << "Depositing Amount..." << "$2000" << endl;
+  //..changing balance
+  balance += 2000.00;
+}//..end of deposit function
+
+//..start of withdraw function
+void Account::withdraw(){
+  //..outputting to console
+  cout << "Withdrawing Amount..." << "$400" << endl;
+  
+  //..if balance is big enough for withdrawal
+  if(balance - 400.00 < 0)
+    //..outputting to console
+    cout << "No Sufficient Funds." << endl;
+  else
+    //..changing balance
+    balance -= 400.00;
+  
+}//..end of withdraw function
+
+//..start of get discriminant function
+double Quadratic::getdiscriminant(){
+  //..calculating discriminant
+  double discriminant = pow(b,2) - 4*a*c;
+  
+  //..returning discriminant
+  return discriminant;
+  
+}//..end of get discriminant function
+
+//..start of get root 1 function
+double Quadratic::getRoot1(){
+  if(getdiscriminant() < 0)
+    //..returning zero if there is no real roots
+    return 0;
+  
+  else if(getdiscriminant() > 0)
+  {
+    //..calculating and returning x1
+    double x1 = (-b + sqrt(getdiscriminant()))/(2*a);
+    return x1;
+  }
+
+  else if(getdiscriminant() == 0)
+  {
+    //..calculating and returning x1 for one root only
+    double x1 = (-b + sqrt(getdiscriminant()))/(2*a);
+    return x1;
+  }
+}//..end of get root 1 function
+
+double Quadratic::getRoot2(){
+  if(getdiscriminant() < 0)
+    //..returning zero if there is no real roots
+    return 0;
+
+  else if(getdiscriminant() > 0)
+  {
+    //..calculating and returning x2
+    double x2 = (-b - sqrt(getdiscriminant()))/(2*a);
+    return x2;
+  }
+}
+
+//..data.txt
+Alexander Bowman
+1234
+845.90
+
+Bianca Bradley
+8888
+550.49
+
+Cindy Chen
+7777
+1000.55
+
+Diane Zhang
+6666
+854.99
+
+Elizabeth May
+5555
+1234.56
