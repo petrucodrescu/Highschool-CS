@@ -1,0 +1,43 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+vector<vector<int>> fill(int n)
+{
+  vector<vector<int>> t(n);
+
+  //..fill the triangle
+  for(int r = 0; r < n; r++)
+    {
+      t[r].resize(r + 1); //set the size of t[r] to r + 1
+
+      //..fill in the first and last element as 1
+      t[r][0] = 1;
+      t[r][r] = 1;
+
+      //..fill in the rest of the elements
+      for(int c = 1; c < r; c++)
+        {
+          t[r][c] = t[r-1][c-1] + t[r-1][c];
+        }
+    }
+
+  return t;
+}
+
+void print(vector<vector<int>> &t)
+{
+  for(int r = 0; r < t.size(); r++)
+    {
+      for(int c = 0; c < t[r].size(); c++)
+        cout << t[r][c] << "\t";
+
+      cout << endl;
+    }
+}
+
+int main() {
+  vector<vector<int>> t = fill(7);
+  print(t);
+}
