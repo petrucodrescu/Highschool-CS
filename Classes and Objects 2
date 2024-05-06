@@ -1,0 +1,45 @@
+#include <iostream>
+using namespace std;
+
+//..create an Employee class
+class Employee{
+public:
+//..data fields
+string first;
+string last;
+int id;
+double salary;
+
+//..methods
+//.constructor -> spatial function (NO RETURN TYPE)
+Employee(string first, string last, int id, double salary)
+{
+  this -> first = first;
+  this -> last = last;
+  this -> id = id;
+  this -> salary = salary;
+}
+
+//..method
+void print()
+{
+  cout << "First name: " << first << endl;
+  cout << "Last name: " << last << endl;
+  cout << "ID: " << id << endl;
+  cout << "Salary: $" << salary << endl;
+  cout << endl;
+}
+
+};
+
+int main() {
+  Employee emp1("Ali", "Askari", 1234, 85000);
+  Employee emp2("John", "Smith", 1235, 95000);
+  emp1.print();
+  emp2.print();
+  
+  // empl.first = "Ali";
+  // empl.last = "Askari";
+  // empl.id = 1234;
+  // empl.salary = 85000;
+}
