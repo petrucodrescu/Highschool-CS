@@ -1,0 +1,65 @@
+#include <iostream>
+using namespace std;
+
+class Person{
+public: 
+string name;
+//..constructor
+Person(){name = "No name";}
+Person(string name): name(name){}//..intializer list
+//..methods
+void walk(){cout << name << " can walk." << endl;}
+void talk(){cout << name << " can talk." << endl;}
+void eat(){cout << name << " can eat." << endl;}
+
+}; //..end of person class
+
+class Compsciteacher : public Person{
+public:
+Compsciteacher(string name): Person(name){}
+void teach(){
+  cout << name << " can teach" << endl;
+}
+};  
+
+class Footballer : public Person{
+public:
+Footballer(string name): Person(name){}
+void play(){
+  cout << name << " can play" << endl;
+}
+};
+
+class Businessman : public Person{
+public:
+Businessman(string name): Person(name){}
+void business(){
+  cout << name << " can run a business" << endl;
+}
+};
+
+int main() {
+  //..create a person object
+  Person p("Ethan Zhou");
+
+  //..create a teacher object
+  Compsciteacher tt("Mr. Joe Johnson");
+  tt.walk();
+  tt.talk();
+  tt.eat();
+  tt.teach();
+
+  //..create a footballer object
+  Footballer f("Mr. Tom Brady");
+  f.walk();
+  f.talk();
+  f.eat();
+  f.play();
+
+  //..create a businessman object
+  Businessman b("Mr. Donald Trump");
+  b.walk();
+  b.talk();
+  b.eat();
+  b.business();
+}
