@@ -1,0 +1,88 @@
+//..main.cpp file
+#include <iostream>
+#include <fstream>
+#include "student.h"
+using namespace std;
+
+int main() {
+  // //..create an object
+  // Student student("Joe Shapiro", 85);
+  // cout << "Name: " << student.getname() << endl;
+  // cout << "Mark: " << student.getmark() << endl;
+  
+  // student.setmark(40);
+  // cout << "Name: " << student.getmark() << endl;
+  // cout << "Mark: " << student.getmark() << endl;
+
+  //..Create an array
+  ifstream fin;
+  fin.open("data.txt");
+  const int size = 5;
+  Student s[size];
+  string name;
+  int mark;
+
+  for(int i = 0; i < size; i++)
+    {
+      getline(fin, name);
+      fin >> mark;
+      fin.ignore();
+      s[i].setname(name);
+      s[i].setmark(mark);
+    }
+
+  fin.close();
+
+  for(int i = 0; i < size; i++)
+    {
+      cout << "Name: " << s[i].getname() << endl;
+      cout << "Mark: " << s[i].getmark() << endl;
+      cout << endl;
+    }
+}
+
+//..data file
+Alexandra Bowman
+80
+Bianca Bradley
+90
+Ciara Smith
+85
+Dina Dong
+83
+Ali Askari
+91
+
+//..student.h file
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+class Student{
+private:
+//..data
+string name;
+int mark;
+
+//..methods
+public:
+//..no-arg constructoor
+Student(){
+  name = " ";
+  mark = 0;
+}
+
+Student(string name, int mark):name(name), mark(mark){}
+
+//getters -> accessors
+string getname(){return name;}
+int getmark(){return mark;}
+
+//setters -> mutators
+void setname(string name){this -> name = name;}
+void setmark(int mark){
+  if(mark < 0)
+    cout << "Invalid mark." << endl;
+  else
+    this -> mark = mark;}
+};
