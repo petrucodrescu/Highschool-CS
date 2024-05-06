@@ -1,0 +1,70 @@
+#include <iostream>
+#include <vector>
+#include <fstream>
+#include <algorithm>
+using namespace std;
+
+/* struct Employee{
+string first;
+string last;
+int id;
+};
+
+void print(vector <Employee> &v);
+
+//..teach sort how to sort
+bool sortbyid(Employee a, Employee b)//..change to go first
+{
+  return(a.id <= b.id);
+}
+
+int main() {
+  vector<Employee> emp;
+
+  ifstream fin;
+  fin.open("data.txt");
+  if(fin.fail())
+  {
+    cout << "Error opening file ... bailing out" << endl;
+    return 1;
+  }
+
+  //..read the data from the file and store it in vector emp
+  while(!fin.eof())
+    {
+      string first, last;
+      int id;
+      fin >> first >> last >> id;
+      emp.push_back({first, last, id});
+    }
+
+  print(emp);
+  sort(emp.begin(), emp.end(), sortbyid);
+  print(emp);
+}
+
+void print(vector <Employee> &v)
+{
+  for(int i = 0; i < v.size(); i++)
+    {
+      cout << "First: " << v[i].first << endl;
+      cout << "Last: " << v[i].last << endl;
+      cout << "ID: " << v[i].id << endl;
+      cout << endl;
+    }
+} */
+
+int main(){
+  vector<vector<int>> grid(4);
+  vector<int> row1{1,2,3,4};
+  vector<int> row2{5,6,7,8};
+  vector<int> row3{9,10,11,12};
+  vector<int> row4{13,14,15,16};
+}
+
+//..data
+Adam Chen 9999
+Nicholas Chen 5555
+Ali Askari 4444
+Aydin Salar 1111
+Dhruv Awasthi 8888
