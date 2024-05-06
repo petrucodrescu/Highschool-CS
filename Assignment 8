@@ -1,0 +1,495 @@
+/***********************************************************************
+Author: Petru Codrescu
+Teacher: Mr. Saleem
+Class: ICS4U1-2
+***********************************************************************/
+
+#include <iostream>
+using namespace std;
+
+//..function prototypes
+void gcd(int m, int n);
+void evenAndOddCount(int value, int even, int odd);
+void evenAndOddCount(int value);
+void reverseDisplay(const string& s);
+int count(const string &s, char a, int counter);
+void count(const string &s, char a);
+int productDigits(int n, int product);
+void productDigits(int n);
+void reverseDisplay(const string &s, int high);
+int smallNum(int a[], int counter, int min);
+void smallNum(int a[]);
+int sumNum(int a[], int sum, int counter, int size);
+void sumNum(int a[], int size);
+void menu();
+
+int main() {
+  //..calling function
+  menu();
+}
+
+//..function definitions
+void gcd(int m, int n)
+{
+  //..checking for factor
+  if(m % n == 0)
+  {
+    cout << "Greatest common factor is: " << n << endl;
+    return;
+  }
+
+  //..recursive connection
+  gcd(n, m % n);
+}
+
+void evenAndOddCount(int value, int even, int odd)
+{
+  //..checking for even number
+  if(value % 2 == 0)
+    even++;
+
+  //..checking for odd number
+  else
+    odd++;
+
+  //..creating the ending condition
+  if(value / 10 == 0)
+  {
+    //..outputting the results
+    cout << "The number of even digits is: " << even << endl;
+    cout << "The number of odd digits is: " << odd << endl; 
+    return;
+  }
+
+  //..recursion connection
+  evenAndOddCount(value / 10, even, odd);
+}
+
+
+//..helper function
+void evenAndOddCount(int value)
+{
+  evenAndOddCount(value, 0, 0);
+}
+
+void reverseDisplay(const string& s)
+{
+  //..intializing variable
+  int n = s.size();
+
+  //..base case
+  if(n == 1)
+    cout << s << endl;
+
+  //..recursive connection
+  else
+  {
+    cout << s[n - 1];
+    reverseDisplay(s.substr(0, n - 1));
+  }
+}
+
+int count(const string &s, char a, int counter)
+{
+  //..base case
+  if(s[0] == a)
+    counter++;
+
+  //..outputting counter
+  if(s.size() == 1)
+    return counter;
+
+  //..recursive connection
+  string s2 = s.substr(1);
+  return count(s2, a, counter);
+}
+
+//..helper function
+void count(const string &s, char a)
+{
+  cout << count(s, a, 0) << endl;
+}
+
+int productDigits(int n, int product)
+{
+  //..declaring variable
+  product = product * (n % 10);
+
+  //..end condition
+  if(n / 10 == 0)
+    return product;
+
+  //..recursive connection
+  n = n/10;
+  return productDigits(n, product);
+}
+
+//..helper function
+void productDigits(int n)
+{
+  cout << productDigits(n, 1) << endl;
+}
+
+//..helper function for question 6
+void reverseDisplay(const string &s, int high)
+{
+  //..base case
+  if(high == 0)
+    cout << s[0] << endl;
+
+  //..recursive connection
+  else
+  {
+    cout << s[high];
+    reverseDisplay(s, high - 1);
+  }
+}
+
+int smallNum(int a[], int counter, int min)
+{
+  //..checking for minimum value
+  if(a[counter] < min)
+    min = a[counter];
+
+  //..end condition
+  if(counter == 4)
+  {
+    return min;
+  }
+
+  //..recursive connection
+  counter++;
+  return smallNum(a, counter, min);
+}
+
+//..helper function
+void smallNum(int a[])
+{
+  cout << "The smallest number is: " << smallNum(a, 0, a[0]) << endl;
+}
+
+int sumNum(int a[], int sum, int counter, int size)
+{
+  //..declaring variable
+  sum = sum + a[counter];
+
+  //..end condition
+  if(counter == size - 1)
+    return sum;
+
+  //..recursive connection
+  counter++;
+  return sumNum(a, sum, counter, size);
+}
+
+//..helper function
+void sumNum(int a[], int size)
+{
+  cout << "The sum is: "<< sumNum(a, 0, 0, size) << endl;
+}
+
+void menu()
+{
+  cout << "Welcome to the Recursion Menu!" << endl;
+  //..intializing variable
+  int choice = 0;
+  
+  while(choice != 9) //..start of while loop
+    {
+      cout << "1. GCD Calculator" << endl;
+      cout << "2. Even and Odd counter" << endl;
+      cout << "3. Reverse of strings" << endl;
+      cout << "4. Count of letters" << endl;
+      cout << "5. Product of digits" << endl;
+      cout << "6. Using high index in reverse" << endl;
+      cout << "7. Smallest Number in an Array" << endl;
+      cout << "8. Sum of Numbers in an Array" << endl;
+      cout << "9. Quit " << endl;
+      cout << "Enter choice: ";
+      cin >> choice;
+      cout << endl;
+      while(choice < 1 || choice > 9)
+        {
+          cout << "Invalid input: " << endl;
+          cout << "Enter choice: ";
+          cin >> choice;
+        }
+      
+      switch(choice)
+        {//..start of switch case
+          case 1: //..option 1
+            {
+              //..declaring variables
+              int n, m;
+
+              //..gaining user input
+              cout << "Enter your first number: ";
+              cin >> m;
+              cout << "Enter your second number: ";
+              cin >> n;
+
+              //..calling function
+              gcd(m, n);
+              cout << endl;
+              break;
+            }
+
+          case 2:
+            {
+              //..declaring variable
+              int value;
+
+              //..gaining user input
+              cout << "Enter your number please: ";
+              cin >> value;
+
+              //..calling function
+              evenAndOddCount(value);
+              cout << endl;
+              break;
+            }
+
+          case 3:
+            {
+              //..declaring variable
+              string word;
+
+              //..gaining user input
+              cout << "Enter your word: ";
+              cin >> word;
+
+              //..calling function
+              reverseDisplay(word);
+              cout << endl;
+              break;
+            }
+
+          case 4:
+            {
+              //..declaring variables
+              string word;
+              char letter;
+
+              //..gaining user input
+              cout << "Enter your word: ";
+              cin >> word;
+              cout << "Enter the letter you wish to count: ";
+              cin >> letter;
+
+              //..calling function
+              count(word, letter);
+              cout << endl;
+              break;
+            }
+
+          case 5:
+            {
+              //..declaring variable
+              int number;
+
+              //..gaining user input
+              cout << "Enter your number: ";
+              cin >> number;
+
+              //..calling function
+              productDigits(number);
+              cout << endl;
+              break;
+            }
+
+          case 6:
+            {
+              //..declaring variables
+              string word;
+              int num;
+
+              //..gaining user input
+              cout << "Enter your word: ";
+              cin >> word;
+              cout << "Enter where you want to go up to: ";
+              cin >> num;
+
+              //..calling function
+              reverseDisplay(word, num - 1);
+              cout << endl;
+              break;
+            }
+
+          case 7:
+            {
+              ///..intializing variables
+              int a[5];
+              int num = 1;
+
+              //..gaining user input through for loop
+              cout << "Please enter your 5 numbers: " << endl;
+              for(int i = 0; i < 5; i++)
+                {
+                  cout << "Number " << num << ": ";
+                  cin >> a[i];
+                  num++;
+                }
+
+              //..calling function
+              smallNum(a);
+              cout << endl;
+              break;
+            }
+
+          case 8:
+            {
+              //..intializing variables
+              int size;
+              int num = 1;
+
+              //..gaining user input
+              cout << "Please enter how many numbers: ";
+              cin >> size;
+              int a[size];
+
+              //..gaining user input through for loop
+              for(int i = 0; i < size; i++)
+                {
+                  cout << "Number " << num << ": ";
+                  cin >> a[i];
+                  num++;
+                }
+
+              //..calling function
+              sumNum(a, size);
+              cout << endl;
+              break;
+            }
+
+          case 9:
+            {
+              cout << "Thank you for using the Recursion Menu." << endl;
+            }
+        }//..end of switch case
+    }//..end of while loop
+}
+
+//..main.h
+#include <iostream>
+using namespace std;
+
+void gcd(int m, int n)
+{
+  if(m % n == 0)
+  {
+    cout << "Greatest common factor is: " << n << endl;
+    return;
+  }
+  
+  gcd(n, m % n);
+}
+
+void evenAndOddCount(int value, int even, int odd)
+{
+  if(value % 2 == 0)
+    even++;
+  else
+    odd++;
+
+  if(value / 10 == 0)
+  {
+    cout << "The number of even digits is: " << even << endl;
+    cout << "The number of odd digits is: " << odd << endl; 
+    return;
+  }
+  
+  evenAndOddCount(value / 10, even, odd);
+}
+
+void evenAndOddCount(int value)
+{
+  evenAndOddCount(value, 0, 0);
+}
+
+void reverseDisplay(const string& s)
+{
+  int n = s.size();
+  if(n == 1)
+    cout << s << endl;
+  else
+  {
+    cout << s[n - 1];
+    reverseDisplay(s.substr(0, n - 1));
+  }
+}
+
+int count(const string &s, char a, int counter)
+{
+  if(s[0] == a)
+    counter++;
+    
+  if(s.size() == 1)
+    return counter;
+
+  string s2 = s.substr(1);
+  return count(s2, a, counter);
+}
+
+void count(const string &s, char a)
+{
+  cout << count(s, a, 0) << endl;
+}
+
+int productDigits(int n, int product)
+{
+  product = product * (n % 10);
+  if(n / 10 == 0)
+    return product;
+  n = n/10;
+  return productDigits(n, product);
+}
+
+void productDigits(int n)
+{
+  cout << productDigits(n, 1) << endl;
+}
+
+void reverseDisplay(const string &s, int high)
+{
+  if(high == 0)
+    cout << s[0] << endl;
+  else
+  {
+    cout << s[high];
+    reverseDisplay(s, high - 1);
+  }
+}
+
+int smallNum(int a[], int counter, int min)
+{
+  if(a[counter] < min)
+    min = a[counter];
+  
+  if(counter == 4)
+  {
+    return min;
+  }
+  counter++;
+  return smallNum(a, counter, min);
+}
+
+void smallNum(int a[])
+{
+  cout << smallNum(a, 0, a[0]) << endl;
+}
+
+int sumNum(int a[], int sum, int counter, int size)
+{
+  sum = sum + a[counter];
+  
+  if(counter == size - 1)
+    return sum;
+
+  counter++;
+  return sumNum(a, sum, counter, size);
+}
+
+void sumNum(int a[], int size)
+{
+  cout << sumNum(a, 0, 0, size) << endl;
+}
