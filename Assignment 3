@@ -1,0 +1,313 @@
+/***********************************************************************
+Teacher: Mr. Saleem
+Author: Petru Codrescu
+Class: ICS4U1-2
+***********************************************************************/
+#include <iostream>
+
+//..including the extra libraries
+#include <fstream>
+#include <iomanip>
+using namespace std;
+
+//..creating the main struct
+struct Data {
+  string firstname;
+  string lastname;
+  double month1;
+  double month2;
+  double month3;
+  double month4;
+};
+
+//..all function prototypes
+void printnamewage(Data arr[]);
+void highestpaid(Data arr[]);
+void lowestpaid(Data arr[]);
+void totalsum(Data arr[]);
+void monthly_average(Data arr[]);
+void menu(int &choice);
+
+//..start of int main
+int main() {
+
+  //..intializing the main array
+  Data arr[10];
+
+  //..intializing other needed variables
+  string line;
+  int choice;
+
+  //..opening and intializing files
+  fstream file;
+  file.open("part_time.txt");
+
+  //..intializing the main array with values
+  for (int i = 0; i < 10; i++)//..start of loop
+    {
+      file >> arr[i].firstname;
+      file >> arr[i].lastname;
+      file >> arr[i].month1;
+      file >> arr[i].month2;
+      file >> arr[i].month3;
+      file >> arr[i].month4;
+    }//..end of loop
+
+  while(choice != 6)//..start of choices loop
+    {
+      //..calling function
+      menu(choice);
+
+      switch(choice){ //..start of switch case
+
+        //..choice 1
+        case 1:
+          {
+            //..calling function
+            printnamewage(arr);
+            break;
+          }
+
+        //..choice 2
+        case 2:
+          {
+            //..calling function
+            highestpaid(arr);
+            break;
+          }
+
+        //..choice 3
+        case 3:
+          {
+            //..calling function
+            lowestpaid(arr);
+            break;
+          }
+
+        //..choice 4
+        case 4:
+          {
+            //..calling function
+            totalsum(arr);
+            break;
+          }
+
+        //..choice 5
+        case 5:
+          {
+            //..callinf function
+            monthly_average(arr);
+            break;
+          }
+      }//..end of switch case
+      
+    }//..end of loop
+  
+}//..end of int main
+
+//..menu function
+void menu(int &choice)
+{
+  //..outputting to user
+  cout << "1) Print each employee name and their monthly average wages." << endl;
+  cout << "2) Print the highest paid employee and his/her pay." << endl;
+  cout << "3) Print the lowest paid employee and his/her pay." << endl;
+  cout << "4) Print the sum of wages paid to all employees." << endl;
+  cout << "5)	Print the average wage of all employees for a given month." << endl;
+  cout << "6) Exit." << endl;
+
+  //..gaining user input
+  cout << "Enter your choice: ";
+  cin >> choice;
+  
+  cout << endl;
+}
+
+//..the print name and average wage function
+void printnamewage(Data arr[])
+{
+  //..intializing array
+  double avg[10];
+  
+  for(int j = 0; j < 10; j++)//..start of loop
+    {
+      //..calculating the average wage for each line
+      avg[j] = (arr[j].month1 + arr[j].month2 + arr[j].month3 + arr[j].month4) / 4;
+    }//..end of loop
+
+  for (int i = 0; i < 10; i++)//..start of loop
+    {
+      //..outputting to user
+      cout << fixed << setprecision(2) << arr[i].firstname << " " << arr[i].lastname << " " << avg[i] << endl;
+    }//..end of loop  
+  
+  cout << endl;
+}
+
+//..finding the highest paid function
+void highestpaid(Data arr[])
+{
+  //..intializing array
+  double avg[10];
+
+  //..intializing variables
+  int employeerow;
+  double temp = 0;
+
+  for(int j = 0; j < 10; j++)//..start of loop
+    {
+      //..calculating the average wage for each line
+      avg[j] = (arr[j].month1 + arr[j].month2 + arr[j].month3 + arr[j].month4) / 4;
+  
+      //..the checking algorithm to see which one is the biggest
+      if(avg[j] > temp)
+      {
+        temp = avg[j];
+        employeerow = j;
+      }
+      
+    }//..end of loop
+  
+  //..outputting to user
+  cout << "The highest paid is: " << arr[employeerow].firstname << " " << arr[employeerow].lastname << " " << avg[employeerow] << endl;
+  
+  cout << endl;
+}
+
+//..finding the lowest paid function
+void lowestpaid(Data arr[])
+{
+  //..intializing array
+  double avg[10];
+
+  //..intializing variables
+  int employeerow;
+  
+  //..a base value for the algorithm to work with
+  double temp = avg[1] = (arr[1].month1 + arr[1].month2 + arr[1].month3 + arr[1].month4) / 4;
+  
+  for(int j = 0; j < 10; j++)//..start of loop
+    {
+      //..calculating the averages for each line
+      avg[j] = (arr[j].month1 + arr[j].month2 + arr[j].month3 + arr[j].month4) / 4;
+
+      //..algorithm to figure out lowest paid
+      if(avg[j] < temp)
+      {
+        temp = avg[j];
+        employeerow = j;
+      }
+      
+    }//..end of loop
+
+  //..outputting to user
+  cout << "The lowest paid is: " << arr[employeerow].firstname << " " << arr[employeerow].lastname << " " << avg[employeerow] << endl;
+  
+  cout << endl;
+}
+
+//..find the sum of all wages function
+void totalsum(Data arr[])
+{
+  //..intializing variable
+  double sum = 0;
+
+  for(int i = 0; i < 10; i++)//..start of loop
+    {
+      //..calculating sum
+      sum += arr[i].month1 + arr[i].month2 + arr[i].month3 + arr[i].month4;
+    }//..end of loop
+
+  //..outputting to user
+  cout << "The sum is: " << sum << endl;
+  
+  cout << endl;
+}
+
+//..finding the average monthly salary function
+void monthly_average(Data arr[])
+{
+  //..intializing variables
+  int option;
+  double sum = 0;
+
+  //..gaining user input
+  cout << "What month do you want? ";
+  cin >> option;
+
+  //..if first month
+  if(option == 1)
+  {
+    for(int i = 0; i < 10; i++)//..start of loop
+      {
+        //..calculating sum
+        sum += arr[i].month1;
+      }//..end of loop
+
+    //..outputting to user
+    cout << "The average monthly salary is: " << sum / 10 << endl;
+    
+    cout << endl;
+  }
+
+  //..if second month
+  if(option == 2)
+  {
+    for(int i = 0; i < 10; i++)//..start of loop
+      {
+        //..calculating sum
+        sum += arr[i].month2;
+      }//..end of loop
+
+    //..outputting to user
+    cout << "The average monthly salary is: " << sum / 10 << endl;
+
+    cout << endl;
+  }
+
+  //..if third month
+  if(option == 3)
+  {
+    for(int i = 0; i < 10; i++)//..start of loop
+      {
+        //..calculating sum
+        sum += arr[i].month3;
+      }//..end of loop
+
+    //..outputting to user
+    cout << "The average monthly salary is: " << sum / 10 << endl;
+
+    cout << endl;
+  }
+
+  //..if fourth month
+  if(option == 4)
+  {
+    for(int i = 0; i < 10; i++)//..start of loop
+      {
+        //..calculating sum
+        sum += arr[i].month4;
+      }//..end of loop
+
+    //..outputting to user
+    cout << "The average monthly salary is: " << sum / 10 << endl;
+
+    cout << endl;
+  }
+}
+
+
+
+
+
+//...Data
+Adam Quincy 2000.45 1500.99 1100.00 1300.50
+Bill Mehar 2500 800.50 1400.88 500.00
+James Garfield 350.25 500.99 800.00 900.00
+Elain Chow 800.00 1000.45 3000.50 990.66
+Alex Rod 1500.00 200.99 3000.00 2500.00
+Joe Johnson 100.45 200.00 1500.00 1300.99
+Carl Smith 50.90 200.00 1500.00 1300.99
+Collin Moon 100.00 1000.45 3000.50 1200.66
+Alexandria Nun 900.00 1000.45 3000.50 100.00
+Rubina Ahmed 700.70 1000.45 3000.50 1140.50
