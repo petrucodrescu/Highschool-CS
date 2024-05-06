@@ -1,0 +1,113 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+/*
+void greet(string name);
+
+int main() {
+
+  string name;
+  cout << "Enter name: ";
+  getline(cin, name);
+  
+  for(int i = 0; i < 10; i++)
+    greet(name);
+}
+
+void greet(string name)
+{
+  cout << "Good afternoon, " << name << endl;
+}*/
+
+/* this is delimeter
+int main() {
+  string text;
+  cout << "Enter some text: " << endl;
+  getline(cin, text, '#');
+
+  cout << "You entered teh following text" << text << endl;
+}*/
+
+/* cin.ignore demo
+int main() {
+  int age;
+  string name;
+
+  cout << "Enter age: ";
+  cin >> age;
+  cin.ignore();
+  
+  cout << "Enter name: ";
+  getline(cin, name);
+  
+  cout << "Hi, " << name << ". You are " << age << " years old!" << endl;
+
+}*/
+
+/*
+double gettheHypoteneuse(int a, int b);
+
+int main() {
+  int a, b;
+  cout << "Input a: ";
+  cin >> a;
+  cout << "Input b: ";
+  cin >> b;
+  cout << "the hypo: " << gettheHypoteneuse(a, b);
+}
+
+double gettheHypoteneuse(int a, int b)
+{
+  double c;
+  c = sqrt(a*a + b*b);
+  return c;
+}*/
+
+/*
+void add(int a, int b)
+{
+  cout << "The sum is: " << a + b << endl;
+}
+
+void add(int a, int b, int c)
+{
+  cout << "The sum is: " << a + b + c << endl;
+}
+
+void add(double a, double b)
+{
+  cout << "The sum is: " << a + b << endl;
+}
+
+int main() {
+  add(3,5);
+  add(1,2,3);
+  add(2.4,3.1);
+}*/
+
+void seperator(double x, char &sign, int whole, double &decimal)
+{
+  if(x > 0)
+    sign = '+';
+  else
+    sign = '-';
+
+  x = abs(x);
+  whole = int(x);
+
+  decimal = x - whole;
+  
+}
+
+int main() {
+  double x = -10.99;
+  char sign;
+  int whole;
+  double decimal;
+
+  seperator(x, sign, whole, decimal);
+  cout << "The number: " << x << endl;
+  cout << "The sign: " << sign << endl;
+  cout << "The whole: " << whole << endl;
+  cout << "The decimal: " << decimal << endl;
+}
