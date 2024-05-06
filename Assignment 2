@@ -1,0 +1,217 @@
+/********************************************************
+Author: Petru Codrescu
+Teacher: Mr.Saleem
+Class: ICS4U1-2
+Mark/Grade Calculator
+********************************************************/
+
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+//..Function prototype for Homework function
+void Homework(double &weightHwScore);
+
+//..Function prototype for Midterm Function 
+void Midterm(double &weightedMidtermExamMark);
+
+//..Function prototype for Final_Exam Function
+void Final_Exam(double &examWeighted, double weightHwScore, double weightedMidtermExamMark, double coursegrade);
+
+
+int main() {
+  //..Intializing variables to call function
+  double weightHwScore = 0;
+  double weightedMidtermExamMark = 0;
+  double examWeighted = 0;
+  double coursegrade = 0;
+
+  //..Introduction to Program
+  cout << "This program accepts your homework and exam scores as input,\nand computes your grade in the course or indicates what grade you \nneed to earn on the final exam." << endl << endl;
+
+  //..Calling all 3 functions
+  Homework(weightHwScore);
+  Midterm(weightedMidtermExamMark);
+  Final_Exam(examWeighted, weightHwScore, weightedMidtermExamMark, coursegrade);
+
+}
+
+
+void Homework(double &weightHwScore)
+{
+  //..Intial header
+  cout << "Homework: " << endl << endl;
+
+  //..Asking for user input
+  int hwWeight;
+  cout << "What is its weight? ";
+  cin >> hwWeight;
+
+  //..Asking for user input
+  int numHw;
+  cout << "How many assignments were there? ";
+  cin >> numHw;
+
+  //..Intializing variables for loop and rest of function
+  int i = 1;
+  int score = 0;
+  int totalScore = 0;
+  int maxScore = 0;
+  int totalMaxScore = 0;
+  
+  while(i <= numHw)//..Start of loop
+    {
+      //..Gaining user input
+      cout << "Homework " << i << " Score and max score: ";
+      cin >> score >> maxScore;
+
+      //..Totaling total max score and gained score
+      totalScore += score;
+      totalMaxScore += maxScore;
+      
+      i++;
+    }//..end of loop
+
+  //..Calculating final weighted score
+  weightHwScore = (totalScore * 1.0 / totalMaxScore) * hwWeight;
+
+  //..Outputing final weighted score
+  cout << "The weighted score is: " << fixed << setprecision(2) << weightHwScore << endl << endl;
+}
+
+void Midterm(double &weightedMidtermExamMark)
+{
+  //..Intial Header
+  cout << "Midterm: " << endl << endl;
+
+  //..Gaining user input 
+  int midtermWeight;
+  cout << "What is its weight? ";
+  cin >> midtermWeight;
+
+  //..Gaining user input
+  int midtermMark;
+  cout << "Exam score: ";
+  cin >> midtermMark;
+
+  //..Asking if there was a curve
+  int curve;
+  cout << "Was there a curve? (1 for yes, 2 for no) ";
+  cin >> curve;
+
+  //..Check if there is a curve 
+  if(curve == 1)
+  {
+    cout << "What was the curve? ";
+    cin >> curve;
+
+    midtermMark = curve + midtermMark;
+
+    //..Check if mark is above 100
+    if(midtermMark > 100)
+      midtermMark = 100;
+  }
+
+  //..Calculating Final Weighted Exam Mark
+  weightedMidtermExamMark = (1.0 * (midtermMark) / 100 * midtermWeight);
+
+  //..Outputing Weighted Midterm Mark
+  cout << "Your weighted midterm mark is: " << fixed << setprecision(1) << weightedMidtermExamMark << endl << endl;
+}
+
+void Final_Exam(double &examWeighted, double weightHwScore, double weightedMidtermExamMark, double coursegrade)
+{
+  //..Intial Header
+  cout << "Final Exam: " << endl << endl;
+
+  //..Asking for user input
+  int yesno;
+  cout << "Did you complete your exam? (1 for yes, 2 for no) ";
+  cin >> yesno;
+
+  //..Checking if completed exam
+  if(yesno == 1)
+  {
+    //..Asking for user input
+    int examWeight;
+    cout << "What is your final exam mark weight? ";
+    cin >> examWeight;
+
+    //..Asking for user input
+    int examMark;
+    cout << "What is your exam mark? ";
+    cin >> examMark;
+
+    //..Asking for user input
+    int curve;
+    cout << "Was there a curve? (1 for yes, 2 for no) ";
+    cin >> curve;
+
+    //..Calculating final mark with curve
+    if(curve == 1)
+    {
+      cout << "What was the curve? ";
+      cin >> curve;
+
+      examMark = curve + examMark;
+
+      if(examMark > 100)
+        examMark = 100;
+    }
+
+    //..Calculating final exam mark weight
+    examWeighted = examMark/100.00 * examWeight;
+
+    //..Outputing final exam weight
+    cout << "Weighted exam score: " << fixed << setprecision(1) << examWeighted << endl;
+
+    //..Calculating course grade 
+    coursegrade = weightHwScore + weightedMidtermExamMark + examWeighted;
+
+    //..Outputing 
+    cout << "Your final course grade is: " << fixed << setprecision(2) << coursegrade << endl;
+  }
+
+  //..Check if exam not complete
+  if(yesno == 2)
+  {
+    //..Asking for user input
+    int examWeight;
+    cout << "What is your final exam mark weight? ";
+    cin >> examWeight;
+
+    //..Asking for user input 
+    int percentage;
+    cout << "What is the percentage you would like to earn? ";
+    cin >> percentage;
+
+    //..Calculating the exam percentage needed
+    double exampercentage = (percentage - weightHwScore - weightedMidtermExamMark) * 100.00 / examWeight; 
+
+    //..Outputting exam percentage needed
+    cout << "You need a score of " << fixed << setprecision(1) << exampercentage << endl;
+
+    //..Checking if exam percentage needed is above 100
+    if(exampercentage > 100)
+    {
+      //..Outputing message
+      cout << "It is impossible to achieve this percentage." << endl;
+
+      //..Calculating final course grade
+      coursegrade = weightHwScore + weightedMidtermExamMark + examWeight;
+
+      //..Outputing the final course grade 
+      cout << "The highest you can get is: " << fixed << setprecision(2) << coursegrade << endl;
+    }
+
+    if(exampercentage <= 0)
+    {
+      //..Outputing message
+      cout << "You can skip the exam!" << endl;
+
+      //..Outputing the final statement
+      cout << "Your mark if you skip your exam will be: " << percentage << endl;
+    }
+  }
+  
+}
