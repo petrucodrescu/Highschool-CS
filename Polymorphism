@@ -1,0 +1,96 @@
+#include <iostream>
+using namespace std;
+
+/* class Animal{
+public:
+virtual void sound(){cout << "Animal makes a sound." << endl;}
+
+//..define the virtual deconstructor
+virtual ~Animal() {}
+};
+
+class Dog : public Animal{
+public:
+void sound() {cout << "The dog says: wuf wuf..." << endl;}
+};
+
+class Cat : public Animal{
+public:
+void sound() {cout << "The cat says: meow meow..." << endl;}
+};
+
+class Cow : public Animal{
+public:
+void sound() {cout << "The cow says: moo moo..." << endl;}
+}; */
+
+class Student{
+public:
+string name;
+Student(string name) : name(name){}
+virtual ~Student() {cout << "Virtual Destructor Invoked!!!" << endl;}
+virtual void print(){cout << name << endl;}
+};
+
+class Medical_Student : public Student { 
+//..does not inherit constructor from parent class
+public: 
+string speciality;
+//..constructor
+Medical_Student(string name, string sp):Student(name), speciality(sp){}
+void print(){
+  cout << name << ": " << speciality; 
+}
+};
+
+int main() {
+  /* Animal *animal[] = {new Cow, new Cat, new Animal, new Dog};
+
+  for(int i = 0; i < 4; i++)
+    {
+      animal[i] -> sound();
+      cout << endl;
+    }
+
+  for(int i= 0; i < 4; i++)
+    {
+      delete animal[i];
+    } */
+/*   Student s("Chris Mong");
+  s.print();//..if it was an array + pointer, u would use array
+
+  Medical_Student ms("Aydin Salar", "Family Medicine");
+  s.print(); */
+  Student *students[] = {
+  new Student ("Ali Askari"),
+  new Student ("Aydin Salar"),
+  new Student ("Dhruv Awasthi"),
+  new Student ("Petru Codrescu"),
+  new Medical_Student ("Joseph Yu", "Family Medicine"),
+  new Medical_Student ("Joanna Park", "Oncology"),
+  new Medical_Student ("Bernard Shah", "Radiology"),
+  new Medical_Student ("Ronald Dong", "Cardiology")
+  };
+
+/*   for(int i = 0; i < 4; i++)
+    {
+      students[i] -> print();
+      cout << endl;
+    }
+
+  for(int i = 0; i < 4; i++)
+    {
+      delete students[i];
+    } */
+
+  for(int i = 0; i < 8; i++)
+    {
+      students[i] -> print();
+      cout << endl;
+    }
+
+/*   for(int i = 0; i < 4; i++)
+    {
+      delete ms[i];
+    } */
+}
