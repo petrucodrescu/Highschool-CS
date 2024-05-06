@@ -1,0 +1,261 @@
+//..main.cpp
+/*
+*****************************************************
+Teacher: Mr. Saleem
+Author: Petru Codrescu
+Class: ICS4U1 - 4A
+***************************************************** 
+*/
+#include <iostream>
+#include <cmath>
+#include "complex.h"
+using namespace std;
+
+int main() {
+  cout << "Welcome to Complex number calculator!" << endl << endl;
+  //..calling the function
+  menu();
+}
+
+//..complex.h
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+//..function header
+void menu();
+
+class Complex{//..start of class
+
+public:
+//..data fields
+double real;
+double imag;
+
+//..no arg constructor
+Complex(){real = 0, imag = 0;}
+
+//..constructor
+Complex(double real, double imag): real(real), imag(imag){}
+
+//..headers for function overloading
+Complex operator+(Complex &rhs);
+
+Complex operator-(Complex &rhs);
+
+Complex operator*(Complex &rhs);
+
+Complex operator*(int n);
+
+//..friend operator for scalar multiplication
+friend Complex operator*(int n, const Complex &p)
+{
+  return Complex(n * p.real, n * p.imag);
+}
+
+Complex operator/(Complex &rhs);
+
+//..function headers
+double mag(Complex p);
+
+double conjugate(Complex p);
+
+//..friend overloading function for cout and cin
+friend istream &operator>>(istream &in, Complex &p)
+{
+  cout << "Enter the real part: ";
+  cin >> p.real;
+  cout << "Enter the imaginary part: ";
+  cin >> p.imag;
+
+  return in;
+}
+
+friend ostream &operator<<(ostream &out, const Complex &rhs)
+{
+  if(rhs.imag > 0)
+  {
+    out << rhs.real << " + " << rhs.imag << "i";
+    return out;
+  }
+  else if(rhs.imag == 0)
+  {
+    out << rhs.real << " + " << rhs.imag << "i";
+    return out;
+  }
+  else 
+  {
+    out << rhs.real << " - " << (rhs.imag) * -1 << "i";
+    return out;
+  }
+}
+
+};
+
+//..complex.cpp
+#include <iostream>
+#include <cmath>
+#include <iomanip>
+#include "complex.h"
+using namespace std;
+
+//..function overload bodies
+Complex Complex::operator+(Complex &rhs)
+{
+  return(Complex(real + rhs.real, imag + rhs.imag));
+}
+
+Complex Complex::operator-(Complex &rhs)
+{
+  return(Complex(real - rhs.real, imag - rhs.imag));
+}
+
+Complex Complex::operator*(Complex &rhs)
+{
+  return(Complex(real * rhs.real - imag * rhs.imag, real * rhs.imag + imag * rhs.real));
+}
+
+Complex Complex::operator/(Complex &rhs)
+{
+  double newreal;
+  double newimag;
+
+  newreal = (real * rhs.real + imag * rhs.imag)/(rhs.real * rhs.real + rhs.imag * rhs.imag);
+
+  newimag = (imag * rhs.real - real * rhs.imag)/(rhs.real * rhs.real + rhs.imag * rhs.imag);
+  return(Complex(newreal, newimag));
+}
+
+double Complex::mag(Complex p)
+{
+  double mag = pow(real * real + imag * imag, 0.5);
+  return mag;
+}
+
+//..function bodies
+double Complex::conjugate(Complex p)
+{
+  return(-imag);
+}
+
+Complex Complex::operator*(int n)
+{
+  return(Complex(real * n, imag * n));
+}
+
+
+//..body of function
+void menu(){
+  //..intialization and decleration
+  int choice = 0;
+  Complex C1, C2;
+
+  //..gaining user input
+  cout << "Enter the first complex number .  . ." << endl;
+  cin >> C1;
+  cout << "Enter the second complex number .  . ." << endl;
+  cin >> C2;
+
+  //..outputting the numbers
+  cout << "You have entered the numbers: " << endl;
+  cout << C1 << endl;
+  cout << C2 << endl;
+
+  while(choice != 9)//..start of while loop
+    {
+      //..outputting menu options
+      cout << "1: Addition" << endl;
+      cout << "2: Subtraction" << endl;
+      cout << "3: Multiplication" << endl;
+      cout << "4: Division" << endl;
+      cout << "5: Magnitude" << endl;
+      cout << "6: Conjugate" << endl;
+      cout << "7: Scalar multiplication from the left" << endl;
+      cout << "8: Scalar multiplication from the right" << endl;
+      cout << "9: Quit" << endl;
+
+      //..gaining user input
+      cout << "Enter selection: ";
+      cin >> choice;
+
+      switch(choice)//..start of switch case
+        {
+          case 1:
+            {
+              //..outputting to console
+              cout << "C1 + C2 = " << C1 + C2 << endl;
+              break;
+            }
+          case 2:
+            {
+              //..outputting to console
+              cout << "C1 - C2 = " << C1 - C2 << endl;
+              break;
+            }
+          case 3:
+            {
+              //..outputting to console
+              cout << "C1 * C2 = " << C1 * C2 << endl;
+              break;
+            }
+          case 4:
+            {
+              cout << fixed << setprecision(2);
+              //..outputting to console
+              cout << "C1 / C2 = " << C1 / C2 << endl;
+              break;
+            }
+          case 5:
+            {
+              cout << fixed << setprecision(1);
+              //..outputting to console
+              cout << "|C1| = " << C1.mag(C1) << endl;
+              break;
+            }
+          case 6:
+            {
+              cout << fixed << setprecision(0);
+              
+              //..intializing object
+              Complex Con;
+              Con.real = C1.real;
+              Con.imag = C1.conjugate(C1);
+              
+              //..outputting to console
+              cout << "The conjugate of C1 is: " << Con << endl;
+              break;
+            }
+          case 7:
+            {
+              //..intializing variable
+              int n;
+
+              //..getting user input
+              cout << "Enter number: ";
+              cin >> n;
+
+              //..outputting to console
+              cout << n << " * C1 = " << n * C1 << endl;
+              break;
+            }
+          case 8:
+            {
+              //..intializing variable
+              int n;
+
+              //..getting user input
+              cout << "Enter number: ";
+              cin >> n;
+
+              //.. outputting to console
+              cout << "C1 * " << n << " = " << C1 * n << endl;
+              break;
+            }
+          case 9:
+            {
+              cout << "Thank you for using the Complex number calculator!" << endl;
+              break;
+            }
+        }//..end of switch case 
+    }//..end of while loop
+}
