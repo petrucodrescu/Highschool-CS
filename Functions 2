@@ -1,0 +1,78 @@
+#include <iostream>
+using namespace std;
+
+/*void swap(int &num1, int &num2){
+  int temp = num1;
+  num1 = num2;
+  num2 = temp;
+  cout << "Inside the function" << endl;
+  cout << "num1: " << num1 << "\t"  << "num2: " << num2 << endl;*/
+//}
+/*
+void mystery(int num){
+  int zeroes = 0;
+  int evens = 0;
+  int odds = 0;
+  while(num > 0)
+    {
+      int num1 = num % 10;
+
+      if(num1 == 0)
+        zeroes++;
+      
+      else if(num1 % 2 == 1)
+        odds++;
+        
+      else
+        evens++;
+
+      num = num/10;
+    }
+  cout << "Zeroes: " << zeroes << endl;
+  cout << "Evens: " << evens << endl;
+  cout << "Odds: " << odds << endl;
+}
+
+int main() {
+
+  int num1 = 10;
+  int num2 = 20;
+  
+  cout << "Before" << endl;
+  cout << num1 << "\t" << num2 << endl;
+
+  cout << "After" << endl;
+  swap(num1, num2);*/
+
+ /* long number = 123456789812345;
+  cout << "number: " << number << endl;
+  cout << "size of short: " << sizeof(short) << " bytes" << endl;*/
+/*
+  mystery(1234506089);
+}*/
+
+void maxMin(int a, int b, int &max, int &min)
+{
+  if(a > b)
+  {
+    max = a;
+    min = b;
+  }
+
+  else if(b > a)
+  {
+    max = b;
+    min = a;
+  }
+
+  cout << max << endl;
+  cout << min << endl;
+}
+
+int main(){
+  int a = 10;
+  int b = 3;
+  int max, min;
+  maxMin(a, b, max, min);
+  
+}
